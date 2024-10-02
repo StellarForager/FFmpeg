@@ -211,4 +211,5 @@ fi
 PATH="$BIN_DIR:$PATH" make -j $jval
 cp ffmpeg "$ENV_ROOT/src/xdcheckin_ffmpeg/bin/"
 
+hash -r
 cd "$ENV_ROOT"
