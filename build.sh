@@ -7,7 +7,6 @@ jflag=
 jval=16
 rebuild=0
 download_only=0
-uname -mpi | grep -qE 'x86|i386|i686' && is_x86=1 || is_x86=0
 
 while getopts 'j:Bd' OPTION
 do
@@ -39,7 +38,6 @@ then
 fi
 
 [ "$rebuild" -eq 1 ] && echo "Reconfiguring existing packages..."
-[ $is_x86 -ne 1 ] && echo "Not using yasm or nasm on non-x86 platform..."
 
 cd `dirname $0`
 ENV_ROOT=`pwd`
@@ -47,16 +45,29 @@ ENV_ROOT=`pwd`
 
 # check operating system
 OS=`uname -s`
-platform="unknown"
+ARCH=${ARCH:-`uname -m`}
+PLATFORM=${PLATFORM:-"unknown"}
 
-case $OS in
+[ "$PLATFORM" = "unknown" ] && case $OS in
   'Darwin')
-    platform='darwin'
+    PLATFORM='darwin'
     ;;
   'Linux')
-    platform='linux'
+    PLATFORM='linux'
     ;;
 esac
+
+echo "$ARCH" | grep -qE 'x86|i386|i686' && is_x86=1 || is_x86=0
+[ $is_x86 -ne 1 ] && echo "Not using yasm or nasm on non-x86 PLATFORM..."
+
+# CROSS_COMPILE="aarch64-linux-gnu"
+CROSS_COMPILE=${CROSS_COMPILE:-""}
+[ -n "$CROSS_COMPILE" ] &&
+  CC="${CROSS_COMPILE}-gcc" \
+  CXX="${CROSS_COMPILE}-g++" \
+  AR="${CROSS_COMPILE}-ar" \
+  RANLIB="${CROSS_COMPILE}-ranlib" \
+  STRIP="${CROSS_COMPILE}-strip"
 
 #if you want a rebuild
 #rm -rf "$BUILD_DIR" "$TARGET_DIR"
@@ -85,12 +96,12 @@ VER_FFMPEG=${VER_FFMPEG:-"7.1"}
 cd $BUILD_DIR
 
 if [ $is_x86 -eq 1 ]; then
-  [ "$platform" = "darwin" ] && download \
+  [ "$PLATFORM" = "darwin" ] && download \
     "yasm-$VER_YASM.tar.gz" \
     "" \
     "nil" \
     "http://www.tortall.net/projects/yasm/releases/"
-  [ "$platform" = "linux" ] && download \
+  [ "$PLATFORM" = "linux" ] && download \
     "nasm-$VER_NASM.tar.bz2" \
     "" \
     "nil" \
@@ -109,11 +120,11 @@ download \
   "nil" \
   "https://code.videolan.org/videolan/x264/-/archive/stable/"
 
-download \
-  "fdk-aac-free-$VER_FDKAAC.tar.gz" \
-  "fdk-aac.tar.gz" \
-  "nil" \
-  "https://github.com/Pairman/Xdcheckin-FFmpeg/releases/download/0.0.0/"
+# download \
+#   "fdk-aac-free-$VER_FDKAAC.tar.gz" \
+#   "fdk-aac.tar.gz" \
+#   "nil" \
+#   "https://github.com/Pairman/Xdcheckin-FFmpeg/releases/download/0.0.0/"
 
 download \
   "ffmpeg-$VER_FFMPEG.tar.xz" \
@@ -126,31 +137,41 @@ download \
 TARGET_DIR_SED=$(echo $TARGET_DIR | awk '{gsub(/\//, "\\/"); print}')
 
 if [ $is_x86 -eq 1 ]; then
-  if [ "$platform" = "linux" ]; then
+  if [ "$PLATFORM" = "linux" ]; then
     echo "*** Building nasm ***"
     cd $BUILD_DIR/nasm*
-  elif [ "$platform" = "darwin" ]; then
+  elif [ "$PLATFORM" = "darwin" ]; then
     echo "*** Building yasm ***"
     cd $BUILD_DIR/yasm*
   fi
+  [ $rebuild -eq 1 -a -f Makefile ] && make distclean || true
+  [ ! -f config.status ] && ./configure --prefix=$TARGET_DIR --bindir=$BIN_DIR
+  make -j $jval
+  make install
 fi
-[ $rebuild -eq 1 -a -f Makefile ] && make distclean || true
-[ ! -f config.status ] && ./configure --prefix=$TARGET_DIR --bindir=$BIN_DIR
-make -j $jval
-make install
 
 # echo "*** Building OpenSSL ***"
 # cd $BUILD_DIR/openssl*
 # [ $rebuild -eq 1 -a -f Makefile ] && make distclean || true
-# PATH="$BIN_DIR:$PATH" CFLAGS="-Os -fPIC" CXXFLAGS="-Os -fPIC" LDFLAGS="-Wl,-s" ./Configure $([ "$platform" = "darwin" ] && echo "darwin64-x86_64-cc") --prefix=$TARGET_DIR --libdir=lib \
-# no-shared no-dso no-ssl3 no-psk no-tests no-md2 no-md4 no-rc2 no-rc4 no-rc5 no-idea no-whirlpool no-seed no-deprecated no-err no-comp no-srp no-weak-ssl-ciphers
+# PATH="$BIN_DIR:$PATH" CFLAGS="-Os -fPIC" CXXFLAGS="-Os -fPIC" LDFLAGS="-Wl,-s" ./Configure \
+#   $([ "$PLATFORM" = "darwin" ] && echo "darwin64-$ARCH-cc") \
+#   $([ ! "$PLATFORM" = "darwin" ] && echo "$PLATFORM-$ARCH") \
+#   $([ -n "$CROSS_COMPILE" ] && echo "--cross-compile-prefix=$CROSS_COMPILE") \
+#   --prefix=$TARGET_DIR --libdir=lib \
+#   no-shared no-dso no-ssl3 no-psk no-tests \
+#   no-md2 no-md4 no-rc2 no-rc4 no-rc5 no-idea \
+#   no-whirlpool no-seed no-deprecated no-err \
+#   no-comp no-srp no-weak-ssl-ciphers
 # PATH="$BIN_DIR:$PATH" CFLAGS="-Os -fPIC" CXXFLAGS="-Os -fPIC" LDFLAGS="-Wl,-s" make -j $jval
 # make install_sw
 
 echo "*** Building x264 ***"
 cd $BUILD_DIR/x264*
 [ $rebuild -eq 1 -a -f Makefile ] && make distclean || true
-[ ! -f config.status ] && PATH="$BIN_DIR:$PATH" CFLAGS="-Os" CXXFLAGS="-Os" LDFLAGS="-Wl,-s" ./configure --prefix=$TARGET_DIR --enable-static --disable-opencl --enable-pic
+[ ! -f config.status ] && PATH="$BIN_DIR:$PATH" CFLAGS="-Os" CXXFLAGS="-Os" LDFLAGS="-Wl,-s" ./configure \
+  $([ -n "$CROSS_COMPILE" ] && echo "--host=${CROSS_COMPILE}") \
+  $([ -n "$CROSS_COMPILE" ] && echo "--cross-prefix=${CROSS_COMPILE}-") \
+  --prefix=$TARGET_DIR --enable-static --enable-strip --disable-opencl --enable-pic
 PATH="$BIN_DIR:$PATH" make -j $jval
 make install
 
@@ -158,7 +179,9 @@ make install
 # cd $BUILD_DIR/fdk-aac*
 # [ $rebuild -eq 1 -a -f Makefile ] && make distclean || true
 # autoreconf -fiv
-# [ ! -f config.status ] && CFLAGS="-Os" CXXFLAGS="-Os" LDFLAGS="-Wl,-s" ./configure --prefix=$TARGET_DIR --disable-shared --enable-static --with-pic
+# [ ! -f config.status ] && CFLAGS="-Os" CXXFLAGS="-Os" LDFLAGS="-Wl,-s" ./configure \
+#   $([ -n "$CROSS_COMPILE" ] && echo "--host=${CROSS_COMPILE}") \
+#   --prefix=$TARGET_DIR --disable-shared --enable-static --with-pic 
 # make -j $jval
 # make install
 
@@ -166,18 +189,23 @@ echo "*** Building FFmpeg ***"
 cd $BUILD_DIR/ffmpeg*
 # patch -p1 < "$ENV_ROOT/0000-ffmpeg-fdk-acc-free.patch"
 [ $rebuild -eq 1 -a -f Makefile ] && make distclean || true
-if [ "$platform" = "linux" ]; then
+if [ "$PLATFORM" = "linux" ]; then
   [ ! -f config.status ] && PATH="$BIN_DIR:$PATH" \
-  PKG_CONFIG_PATH="$TARGET_DIR/lib/pkgconfig:$TARGET_DIR/lib64/pkgconfig$([ "$platform" = "darwin" ] && echo ":/usr/local/lib/pkgconfig:/usr/local/share/pkgconfig:/usr/local/Cellar/openssl@3/${VER_OPENSSL}_1/lib/pkgconfig")" \
+  PKG_CONFIG_PATH="$TARGET_DIR/lib/pkgconfig:$TARGET_DIR/lib64/pkgconfig$([ "$PLATFORM" = "darwin" ] && echo ":/usr/local/lib/pkgconfig:/usr/local/share/pkgconfig:/usr/local/Cellar/openssl@3/${VER_OPENSSL}_1/lib/pkgconfig")" \
   ./configure \
-    $([ "$platform" = "darwin" ] && echo "--cc=/usr/bin/clang") \
+    --arch="$ARCH" \
+    --target-os="$PLATFORM" \
+    $([ "$PLATFORM" = "darwin" ] && echo "--cc=/usr/bin/clang") \
+    $([ -n "$CROSS_COMPILE" ] && echo "--cross-prefix=${CROSS_COMPILE}-") \
+    $([ -n "$CROSS_COMPILE" ] && echo "--enable-cross-compile") \
+    $([ -n "$CROSS_COMPILE" ] && echo "--pkg-config=pkg-config") \
     --prefix="$TARGET_DIR" \
     --pkg-config-flags="--static" \
     --extra-cflags="-I$TARGET_DIR/include -Os" \
     --extra-cxxflags="-I$TARGET_DIR/include -Os" \
     --extra-ldflags="-L$TARGET_DIR/lib -Wl,-s" \
-    --extra-libs="$([ "$platform" = "linux" ] && echo "-lpthread -lm")" \
-    --extra-ldexeflags="$([ "$platform" = "linux" ] && echo "-static")$([ "$platform" = "darwin" ] && echo "-Bstatic")" \
+    --extra-libs="$([ "$PLATFORM" = "linux" ] && echo "-lpthread -lm")" \
+    --extra-ldexeflags="$([ "$PLATFORM" = "linux" ] && echo "-static")$([ "$PLATFORM" = "darwin" ] && echo "-Bstatic")" \
     --bindir="$BIN_DIR" \
     --disable-everything \
     --disable-manpages \
