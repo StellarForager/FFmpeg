@@ -78,6 +78,7 @@ echo "#### FFmpeg static build ####"
 VER_YASM=${VER_YASM:-"1.3.0"}
 VER_NASM=${VER_NASM:-"2.16.03"}
 VER_OPENSSL=${VER_OPENSSL:-"3.3.2"}
+VER_FDKAAC=${VER_FDKAAC:-"0.1.6"}
 VER_FFMPEG=${VER_FFMPEG:-"7.1"}
 
 #this is our working directory
@@ -107,6 +108,12 @@ download \
   "" \
   "nil" \
   "https://code.videolan.org/videolan/x264/-/archive/stable/"
+
+download \
+  "fdk-aac-free-$VER_FDKAAC.tar.gz" \
+  "fdk-aac.tar.gz" \
+  "nil" \
+  "https://github.com/Pairman/Xdcheckin-FFmpeg/releases/download/0.0.0/"
 
 download \
   "ffmpeg-$VER_FFMPEG.tar.xz" \
@@ -143,49 +150,63 @@ make install
 echo "*** Building x264 ***"
 cd $BUILD_DIR/x264*
 [ $rebuild -eq 1 -a -f Makefile ] && make distclean || true
-[ ! -f config.status ] && PATH="$BIN_DIR:$PATH" CFLAGS="-Os -fPIC" CXXFLAGS="-Os -fPIC" LDFLAGS="-Wl,-s" ./configure --prefix=$TARGET_DIR --enable-static --disable-shared --disable-opencl --enable-pic
+[ ! -f config.status ] && PATH="$BIN_DIR:$PATH" CFLAGS="-Os" CXXFLAGS="-Os" LDFLAGS="-Wl,-s" ./configure --prefix=$TARGET_DIR --enable-static --disable-opencl --enable-pic
 PATH="$BIN_DIR:$PATH" make -j $jval
 make install
 
+# echo "*** Building fdk-aac-free ***"
+# cd $BUILD_DIR/fdk-aac*
+# [ $rebuild -eq 1 -a -f Makefile ] && make distclean || true
+# autoreconf -fiv
+# [ ! -f config.status ] && CFLAGS="-Os" CXXFLAGS="-Os" LDFLAGS="-Wl,-s" ./configure --prefix=$TARGET_DIR --disable-shared --enable-static --with-pic
+# make -j $jval
+# make install
+
 echo "*** Building FFmpeg ***"
 cd $BUILD_DIR/ffmpeg*
+# patch -p1 < "$ENV_ROOT/0000-ffmpeg-fdk-acc-free.patch"
 [ $rebuild -eq 1 -a -f Makefile ] && make distclean || true
 if [ "$platform" = "linux" ]; then
   [ ! -f config.status ] && PATH="$BIN_DIR:$PATH" \
-  PKG_CONFIG_PATH="$TARGET_DIR/lib/pkgconfig:$TARGET_DIR/lib64/pkgconfig$([ $platform = "darwin" ] && echo ":/usr/local/lib/pkgconfig:/usr/local/share/pkgconfig:/usr/local/Cellar/openssl@3/${VER_OPENSSL}_1/lib/pkgconfig")" \
+  PKG_CONFIG_PATH="$TARGET_DIR/lib/pkgconfig:$TARGET_DIR/lib64/pkgconfig$([ "$platform" = "darwin" ] && echo ":/usr/local/lib/pkgconfig:/usr/local/share/pkgconfig:/usr/local/Cellar/openssl@3/${VER_OPENSSL}_1/lib/pkgconfig")" \
   ./configure \
     $([ "$platform" = "darwin" ] && echo "--cc=/usr/bin/clang") \
     --prefix="$TARGET_DIR" \
     --pkg-config-flags="--static" \
-    --extra-cflags="-I$TARGET_DIR/include -Os -fPIC" \
-    --extra-cxxflags="-Os -fPIC" \
+    --extra-cflags="-I$TARGET_DIR/include -Os" \
+    --extra-cxxflags="-I$TARGET_DIR/include -Os" \
     --extra-ldflags="-L$TARGET_DIR/lib -Wl,-s" \
-    $([ "$platform" = "linux" ] && echo "--extra-libs=\"-lpthread -lm\"") \
-    --extra-ldexeflags=$([ "$platform" = "linux" ] && echo "-static")$([ "$platform" = "darwin" ] && echo "-Bstatic") \
+    --extra-libs="$([ "$platform" = "linux" ] && echo "-lpthread -lm")" \
+    --extra-ldexeflags="$([ "$platform" = "linux" ] && echo "-static")$([ "$platform" = "darwin" ] && echo "-Bstatic")" \
     --bindir="$BIN_DIR" \
     --disable-everything \
     --disable-manpages \
     --disable-doc \
-    --disable-shared \
     --enable-pic \
     --enable-static \
     --enable-gpl \
     --enable-version3 \
     --enable-libx264 \
     --enable-demuxer=hls \
-    --enable-decoder=h264 \
     --enable-demuxer=rtsp \
+    --enable-demuxer=h264 \
+    --enable-decoder=h264 \
     --enable-parser=h264 \
+    --enable-encoder=mjpeg \
     --enable-muxer=image2 \
     --enable-protocol=pipe \
     --enable-protocol=tcp \
     --enable-protocol=http
-#   --enable-openssl \
-#   --enable-protocol=file \
-#   --enable-protocol=udp \
-#   --enable-protocol=https \
-#   --enable-protocol=rtmp \
-#   --enable-protocol=rtmps
+#     --enable-openssl \
+#     --enable-libfdk-aac \
+#     --enable-decoder=aac \
+#     --enable-parser=aac \
+#     --enable-muxer=mp4 \
+#     --enable-protocol=file \
+#     --enable-protocol=udp \
+#     --enable-protocol=https \
+#     --enable-protocol=rtmp \
+#     --enable-protocol=rtmps
 fi
 
 PATH="$BIN_DIR:$PATH" make -j $jval
