@@ -55,6 +55,9 @@ PLATFORM=${PLATFORM:-"unknown"}
   'Linux')
     PLATFORM='linux'
     ;;
+  'MSYS'*|'MINGW'*)
+    PLATFORM='msys2'
+    ;;
 esac
 
 echo "$ARCH" | grep -qE 'x86|i386|i686' && is_x86=1 || is_x86=0
@@ -96,16 +99,22 @@ VER_FFMPEG=${VER_FFMPEG:-"7.1"}
 cd $BUILD_DIR
 
 if [ $is_x86 -eq 1 ]; then
-  [ "$PLATFORM" = "darwin" ] && download \
-    "yasm-$VER_YASM.tar.gz" \
-    "" \
-    "nil" \
-    "http://www.tortall.net/projects/yasm/releases/"
-  [ "$PLATFORM" = "linux" ] && download \
-    "nasm-$VER_NASM.tar.bz2" \
-    "" \
-    "nil" \
-    "https://www.nasm.us/pub/nasm/releasebuilds/$VER_NASM/"
+  case "$PLATFORM" in
+    'darwin'|'msys2')
+      download \
+        "yasm-$VER_YASM.tar.gz" \
+        "" \
+        "nil" \
+        "http://www.tortall.net/projects/yasm/releases/"
+      ;;
+    'linux')
+      download \
+        "nasm-$VER_NASM.tar.bz2" \
+        "" \
+        "nil" \
+        "https://www.nasm.us/pub/nasm/releasebuilds/$VER_NASM/"
+      ;;
+  esac
 fi
 
 # download \
@@ -137,13 +146,16 @@ download \
 TARGET_DIR_SED=$(echo $TARGET_DIR | awk '{gsub(/\//, "\\/"); print}')
 
 if [ $is_x86 -eq 1 ]; then
-  if [ "$PLATFORM" = "linux" ]; then
-    echo "*** Building nasm ***"
-    cd $BUILD_DIR/nasm*
-  elif [ "$PLATFORM" = "darwin" ]; then
-    echo "*** Building yasm ***"
-    cd $BUILD_DIR/yasm*
-  fi
+  case "$PLATFORM" in
+    'darwin'|'msys2')
+      echo "*** Building yasm ***"
+      cd $BUILD_DIR/yasm*
+      ;;
+    'linux')
+      echo "*** Building nasm ***"
+      cd $BUILD_DIR/nasm*
+      ;;
+  esac
   [ $rebuild -eq 1 -a -f Makefile ] && make distclean || true
   [ ! -f config.status ] && ./configure --prefix=$TARGET_DIR --bindir=$BIN_DIR
   make -j $jval
@@ -171,7 +183,8 @@ cd $BUILD_DIR/x264*
 [ ! -f config.status ] && PATH="$BIN_DIR:$PATH" CFLAGS="-Os" CXXFLAGS="-Os" LDFLAGS="-Wl,-s" ./configure \
   $([ -n "$CROSS_COMPILE" ] && echo "--host=${CROSS_COMPILE}") \
   $([ -n "$CROSS_COMPILE" ] && echo "--cross-prefix=${CROSS_COMPILE}-") \
-  --prefix=$TARGET_DIR --enable-static --enable-strip --disable-opencl --enable-pic
+  --prefix=$TARGET_DIR --enable-static --enable-strip --enable-pic --disable-opencl \
+  $([ "$PLATFORM" = "msys2" ] && echo " --disable-win32thread")
 PATH="$BIN_DIR:$PATH" make -j $jval
 make install
 
@@ -191,7 +204,8 @@ cd $BUILD_DIR/ffmpeg*
 [ $rebuild -eq 1 -a -f Makefile ] && make distclean || true
 if [ "$PLATFORM" = "linux" ]; then
   [ ! -f config.status ] && PATH="$BIN_DIR:$PATH" \
-  PKG_CONFIG_PATH="$TARGET_DIR/lib/pkgconfig:$TARGET_DIR/lib64/pkgconfig$([ "$PLATFORM" = "darwin" ] && echo ":/usr/local/lib/pkgconfig:/usr/local/share/pkgconfig:/usr/local/Cellar/openssl@3/${VER_OPENSSL}_1/lib/pkgconfig")" \
+  PKG_CONFIG_PATH="$TARGET_DIR/lib/pkgconfig:$TARGET_DIR/lib64/pkgconfig$([ "$PLATFORM" = "darwin" ] && \
+    echo ":/usr/local/lib/pkgconfig:/usr/local/share/pkgconfig:/usr/local/Cellar/openssl@3/${VER_OPENSSL}_1/lib/pkgconfig")" \
   ./configure \
     --arch="$ARCH" \
     --target-os="$PLATFORM" \
@@ -203,12 +217,14 @@ if [ "$PLATFORM" = "linux" ]; then
     --pkg-config-flags="--static" \
     --extra-cflags="-I$TARGET_DIR/include -Os" \
     --extra-cxxflags="-I$TARGET_DIR/include -Os" \
-    --extra-ldflags="-L$TARGET_DIR/lib -Wl,-s" \
+    --extra-ldflags="-L$TARGET_DIR/lib -Wl,-s $([ "$PLATFORM" = "msys2" ] && echo "-static")" \
     --extra-libs="$([ "$PLATFORM" = "linux" ] && echo "-lpthread -lm")" \
     --extra-ldexeflags="$([ "$PLATFORM" = "linux" ] && echo "-static")$([ "$PLATFORM" = "darwin" ] && echo "-Bstatic")" \
     --bindir="$BIN_DIR" \
     --disable-everything \
     --disable-manpages \
+    $([ "$PLATFORM" = "msys2" ] && echo " --disable-w32threads") \
+    $([ "$PLATFORM" = "msys2" ] && echo " --disable-autodetect") \
     --disable-doc \
     --enable-pic \
     --enable-static \
