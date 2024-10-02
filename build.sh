@@ -223,9 +223,9 @@ if [ "$PLATFORM" = "linux" ]; then
     --bindir="$BIN_DIR" \
     --disable-everything \
     --disable-manpages \
+    --disable-doc \
     $([ "$PLATFORM" = "msys2" ] && echo " --disable-w32threads") \
     $([ "$PLATFORM" = "msys2" ] && echo " --disable-autodetect") \
-    --disable-doc \
     --enable-pic \
     --enable-static \
     --enable-gpl \
