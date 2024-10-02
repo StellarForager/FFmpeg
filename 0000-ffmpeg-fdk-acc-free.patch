@@ -1,5 +1,5 @@
 --- a/configure 2024-09-30 07:31:47.000000000 +0800
-+++ b/configure 2024-10-02 15:22:00.440192305 +0800
++++ b/configure 2024-10-02 15:39:17.577243655 +0800
 @@ -1876,7 +1876,6 @@
 
  EXTERNAL_LIBRARY_NONFREE_LIST="
@@ -7,3 +7,12 @@
 -    libfdk_aac
      libtls
  "
+
+@@ -1916,6 +1915,7 @@
+     libcodec2
+     libdav1d
+     libdc1394
++    libfdk_aac
+     libflite
+     libfontconfig
+     libfreetype
