@@ -209,6 +209,6 @@ if [ "$platform" = "linux" ]; then
 #     --enable-protocol=rtmps
 fi
 PATH="$BIN_DIR:$PATH" make -j $jval
-cp ffmpeg "$ENV_ROOT"
+cp ffmpeg "$ENV_ROOT/src/xdcheckin_ffmpeg/bin/"
 
 cd "$ENV_ROOT"
