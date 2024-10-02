@@ -208,5 +208,7 @@ if [ "$platform" = "linux" ]; then
 #     --enable-protocol=rtmp \
 #     --enable-protocol=rtmps
 fi
-
 PATH="$BIN_DIR:$PATH" make -j $jval
+cp ffmpeg "$ENV_ROOT"
+
+cd "$ENV_ROOT"
