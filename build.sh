@@ -4,7 +4,7 @@ set -e
 set -u
 
 jflag=
-jval=8
+jval=16
 rebuild=0
 download_only=0
 uname -mpi | grep -qE 'x86|i386|i686' && is_x86=1 || is_x86=0
