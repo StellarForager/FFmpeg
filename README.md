@@ -1,5 +1,5 @@
 # Xdcheckin-FFmpeg
-Scripts to build minimal FFmpeg with h.264 for Xdcheckin.
+Minimal FFmpeg with h.264 for Xdcheckin.
 
 ## Build Status
 
