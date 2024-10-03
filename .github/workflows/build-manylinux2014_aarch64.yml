@@ -18,4 +18,5 @@ jobs:
           WHL_PLATFORM: "manylinux2014_aarch64"
           ARCH: "aarch64"
           CROSS_COMPILE: "aarch64-linux-gnu"
+          CROSS_COMPILE_PKG_SUFFIX: "aarch64-linux-gnu"
           PLATFORM: "linux"
