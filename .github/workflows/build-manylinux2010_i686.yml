@@ -1,4 +1,4 @@
- name: Build for manylinux2010_i686
+name: Build for manylinux2010_i686
 
 on:
   workflow_call:
