@@ -9,9 +9,7 @@ sudo NEEDRESTART_MODE=a apt-get \
   autoconf \
   automake \
   build-essential \
-  cmake \
   gawk \
-  libssl-dev \
   libtool \
   pkg-config
 [ -n "$CROSS_COMPILE" ] && sudo NEEDRESTART_MODE=a apt-get \
