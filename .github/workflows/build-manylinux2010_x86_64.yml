@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    name: Build for manylinux2010_x86_64
+    name: Build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
