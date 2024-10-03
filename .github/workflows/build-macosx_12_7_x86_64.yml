@@ -1,11 +1,11 @@
-name: Build for macosx_12_0_x86_64
+name: Build for macosx_12_7_x86_64
 
 on:
   workflow_call:
   workflow_dispatch:
 
 jobs:
-  build-macosx_12_0_x86_64:
+  build-macosx_12_7_x86_64:
     name: Build
     runs-on: macos-12
     steps:
@@ -15,4 +15,4 @@ jobs:
       - name: Build FFmpeg and wheel
         uses: ./.github/actions/build-wheel
         with:
-          WHL_PLATFORM: "macosx_12_0_x86_64"
+          WHL_PLATFORM: "macosx_12_7_x86_64"
