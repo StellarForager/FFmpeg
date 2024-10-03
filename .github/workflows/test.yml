@@ -6,12 +6,5 @@ on:
 
 jobs:
   build-manylinux2010_x86_64:
-    name: Test
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4.1.1
-
-    - name: Install dependencies
-      run: |
-        sudo sh setup-ubuntu.sh
+    name: Build for manylinux2010_x86_64
+    uses: ./.github/workflows/build-manylinux2010_x86_64.yml
