@@ -1,0 +1,51 @@
+name: Build for manylinux2010_x86_64
+
+on:
+  workflow_call:
+  workflow_dispatch:
+
+jobs:
+  build-manylinux2010_x86_64:
+    name: Build for manylinux2010_x86_64
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4.1.1
+
+    - name: Set up Python
+      uses: actions/setup-python@v5.0.0
+      with:
+        python-version: "3.10"
+        cache: pip
+
+    - name: Install dependencies
+      run: |
+        sh setup-ubuntu.sh
+        pip install build
+
+    - name: Export environment variables
+      run: |
+        env | grep -E "CC|CXX|CROSS|ARCH|PLATFORM|PATH"
+      working-directory: ${{ github.workspace }}
+
+    - name: Build FFmpeg
+      run: |
+        sh build.sh
+        find build/ffmpeg*/ -type f \( -name "ffmpeg" -o -name "ffmpeg.exe" -o -name "ffprobe" -o -name "ffprobe.exe" \) -exec cp {} src/xdcheckin_ffmpeg/bin/ \;
+        ldd src/xdcheckin_ffmpeg/bin/ff*
+        file src/xdcheckin_ffmpeg/bin/ff*
+      working-directory: ${{ github.workspace }}
+
+    - name: Build package
+      run: |
+        python -m build
+      working-directory: ${{ github.workspace }}
+
+    - name: Upload package
+      uses: actions/upload-artifact@v4.3.1
+      with:
+        if-no-files-found: error
+        name: dist_wheel
+        path: |
+          dist/*.whl
