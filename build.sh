@@ -55,8 +55,8 @@ PLATFORM=${PLATFORM:-"unknown"}
   'Linux')
     PLATFORM='linux'
     ;;
-  'MSYS'*|'MINGW'*)
-    PLATFORM='msys2'
+  'CYG'*|'MSYS'*|'MINGW'*)
+    PLATFORM='mingw32'
     ;;
 esac
 
@@ -73,7 +73,7 @@ CROSS_COMPILE=${CROSS_COMPILE:-""}
   STRIP="${CROSS_COMPILE}-strip"
 
 #if you want a rebuild
-#rm -rf "$BUILD_DIR" "$TARGET_DIR"
+rm -rf "$BUILD_DIR" "$TARGET_DIR"
 mkdir -p "$BUILD_DIR" "$TARGET_DIR" "$DOWNLOAD_DIR" "$BIN_DIR"
 
 #download and extract package
@@ -100,7 +100,7 @@ cd $BUILD_DIR
 
 if [ $is_x86 -eq 1 ]; then
   case "$PLATFORM" in
-    'darwin'|'msys2')
+    'darwin'|'mingw32')
       download \
         "yasm-$VER_YASM.tar.gz" \
         "" \
@@ -147,7 +147,7 @@ TARGET_DIR_SED=$(echo $TARGET_DIR | awk '{gsub(/\//, "\\/"); print}')
 
 if [ $is_x86 -eq 1 ]; then
   case "$PLATFORM" in
-    'darwin'|'msys2')
+    'darwin'|'mingw32')
       echo "*** Building yasm ***"
       cd $BUILD_DIR/yasm*
       ;;
@@ -184,7 +184,7 @@ cd $BUILD_DIR/x264*
   $([ -n "$CROSS_COMPILE" ] && echo "--host=${CROSS_COMPILE}") \
   $([ -n "$CROSS_COMPILE" ] && echo "--cross-prefix=${CROSS_COMPILE}-") \
   --prefix=$TARGET_DIR --enable-static --enable-strip --enable-pic --disable-opencl \
-  $([ "$PLATFORM" = "msys2" ] && echo " --disable-win32thread")
+  $([ "$PLATFORM" = "mingw32" ] && echo " --disable-win32thread")
 PATH="$BIN_DIR:$PATH" make -j $jval
 make install
 
@@ -202,56 +202,54 @@ echo "*** Building FFmpeg ***"
 cd $BUILD_DIR/ffmpeg*
 # patch -p1 < "$ENV_ROOT/0000-ffmpeg-fdk-acc-free.patch"
 [ $rebuild -eq 1 -a -f Makefile ] && make distclean || true
-if [ "$PLATFORM" = "linux" ]; then
-  [ ! -f config.status ] && PATH="$BIN_DIR:$PATH" \
-  PKG_CONFIG_PATH="$TARGET_DIR/lib/pkgconfig:$TARGET_DIR/lib64/pkgconfig$([ "$PLATFORM" = "darwin" ] && \
-    echo ":/usr/local/lib/pkgconfig:/usr/local/share/pkgconfig:/usr/local/Cellar/openssl@3/${VER_OPENSSL}_1/lib/pkgconfig")" \
-  ./configure \
-    --arch="$ARCH" \
-    --target-os="$PLATFORM" \
-    $([ "$PLATFORM" = "darwin" ] && echo "--cc=/usr/bin/clang") \
-    $([ -n "$CROSS_COMPILE" ] && echo "--cross-prefix=${CROSS_COMPILE}-") \
-    $([ -n "$CROSS_COMPILE" ] && echo "--enable-cross-compile") \
-    $([ -n "$CROSS_COMPILE" ] && echo "--pkg-config=pkg-config") \
-    --prefix="$TARGET_DIR" \
-    --pkg-config-flags="--static" \
-    --extra-cflags="-I$TARGET_DIR/include -Os" \
-    --extra-cxxflags="-I$TARGET_DIR/include -Os" \
-    --extra-ldflags="-L$TARGET_DIR/lib -Wl,-s $([ "$PLATFORM" = "msys2" ] && echo "-static")" \
-    --extra-libs="$([ "$PLATFORM" = "linux" ] && echo "-lpthread -lm")" \
-    --extra-ldexeflags="$([ "$PLATFORM" = "linux" ] && echo "-static")$([ "$PLATFORM" = "darwin" ] && echo "-Bstatic")" \
-    --bindir="$BIN_DIR" \
-    --disable-everything \
-    --disable-manpages \
-    --disable-doc \
-    $([ "$PLATFORM" = "msys2" ] && echo " --disable-w32threads") \
-    $([ "$PLATFORM" = "msys2" ] && echo " --disable-autodetect") \
-    --enable-pic \
-    --enable-static \
-    --enable-gpl \
-    --enable-version3 \
-    --enable-libx264 \
-    --enable-demuxer=hls \
-    --enable-demuxer=rtsp \
-    --enable-demuxer=h264 \
-    --enable-decoder=h264 \
-    --enable-parser=h264 \
-    --enable-encoder=mjpeg \
-    --enable-muxer=image2 \
-    --enable-protocol=pipe \
-    --enable-protocol=tcp \
-    --enable-protocol=http
-#     --enable-openssl \
-#     --enable-libfdk-aac \
-#     --enable-decoder=aac \
-#     --enable-parser=aac \
-#     --enable-muxer=mp4 \
-#     --enable-protocol=file \
-#     --enable-protocol=udp \
-#     --enable-protocol=https \
-#     --enable-protocol=rtmp \
-#     --enable-protocol=rtmps
-fi
+[ ! -f config.status ] && PATH="$BIN_DIR:$PATH" \
+PKG_CONFIG_PATH="$TARGET_DIR/lib/pkgconfig:$TARGET_DIR/lib64/pkgconfig$([ "$PLATFORM" = "darwin" ] && \
+  echo ":/usr/local/lib/pkgconfig:/usr/local/share/pkgconfig:/usr/local/Cellar/openssl@3/${VER_OPENSSL}_1/lib/pkgconfig")" \
+./configure \
+  --arch="$ARCH" \
+  --target-os="$PLATFORM" \
+  $([ "$PLATFORM" = "darwin" ] && echo "--cc=/usr/bin/clang") \
+  $([ -n "$CROSS_COMPILE" ] && echo "--cross-prefix=${CROSS_COMPILE}-") \
+  $([ -n "$CROSS_COMPILE" ] && echo "--enable-cross-compile") \
+  $([ -n "$CROSS_COMPILE" ] && echo "--pkg-config=pkg-config") \
+  --prefix="$TARGET_DIR" \
+  --pkg-config-flags="--static" \
+  --extra-cflags="-I$TARGET_DIR/include -Os" \
+  --extra-cxxflags="-I$TARGET_DIR/include -Os" \
+  --extra-ldflags="-L$TARGET_DIR/lib -Wl,-s $([ "$PLATFORM" = "mingw32" ] && echo "-static")" \
+  --extra-libs="$([ "$PLATFORM" = "linux" ] && echo "-lpthread -lm")" \
+  --extra-ldexeflags="$([ "$PLATFORM" = "linux" ] && echo "-static")$([ "$PLATFORM" = "darwin" ] && echo "-Bstatic")" \
+  --bindir="$BIN_DIR" \
+  --disable-everything \
+  --disable-manpages \
+  --disable-doc \
+  $([ "$PLATFORM" = "mingw32" ] && echo " --disable-w32threads") \
+  $([ "$PLATFORM" = "mingw32" ] && echo " --disable-autodetect") \
+  --enable-pic \
+  --enable-static \
+  --enable-gpl \
+  --enable-version3 \
+  --enable-libx264 \
+  --enable-demuxer=hls \
+  --enable-demuxer=rtsp \
+  --enable-demuxer=h264 \
+  --enable-decoder=h264 \
+  --enable-parser=h264 \
+  --enable-encoder=mjpeg \
+  --enable-muxer=image2 \
+  --enable-protocol=pipe \
+  --enable-protocol=tcp \
+  --enable-protocol=http
+#   --enable-openssl \
+#   --enable-libfdk-aac \
+#   --enable-decoder=aac \
+#   --enable-parser=aac \
+#   --enable-muxer=mp4 \
+#   --enable-protocol=file \
+#   --enable-protocol=udp \
+#   --enable-protocol=https \
+#   --enable-protocol=rtmp \
+#   --enable-protocol=rtmps
 PATH="$BIN_DIR:$PATH" make -j $jval
 
 hash -r
