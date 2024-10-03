@@ -1,4 +1,4 @@
-__all__ = ("ffmpeg", )
+__all__ = ("ffmpeg", "ffmpeg_version")
 
 from functools import lru_cache as _lru_cache
 import importlib.resources as _resources
