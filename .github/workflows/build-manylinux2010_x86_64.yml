@@ -21,8 +21,8 @@ jobs:
 
     - name: Install dependencies
       run: |
-        sudo apt install -y file
         sh setup-ubuntu.sh
+        sudo apt install -y file
         pip install build
 
     - name: Export environment variables
@@ -34,8 +34,9 @@ jobs:
       run: |
         sh build.sh
         find build/ffmpeg*/ -type f \( -name "ffmpeg" -o -name "ffmpeg.exe" -o -name "ffprobe" -o -name "ffprobe.exe" \) -exec cp {} src/xdcheckin_ffmpeg/bin/ \;
-        ldd src/xdcheckin_ffmpeg/bin/ff*
-        file src/xdcheckin_ffmpeg/bin/ff*
+        ldd src/xdcheckin_ffmpeg/bin/ff* || true
+        file src/xdcheckin_ffmpeg/bin/ff* || true
+        
       working-directory: ${{ github.workspace }}
 
     - name: Build package
