@@ -1,13 +1,13 @@
-name: Build for macosx_14_0_arm64
+name: Build for macosx_14_7_arm64
 
 on:
   workflow_call:
   workflow_dispatch:
 
 jobs:
-  build-macosx_14_0_arm64:
+  build-macosx_14_7_arm64:
     name: Build
-    runs-on: macos-14-arm64
+    runs-on: macos-14
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4.1.1
@@ -15,4 +15,4 @@ jobs:
       - name: Build FFmpeg and wheel
         uses: ./.github/actions/build-wheel
         with:
-          WHL_PLATFORM: "macosx_14_0_arm64"
+          WHL_PLATFORM: "macosx_14_7_arm64"
