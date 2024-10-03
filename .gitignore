@@ -1,5 +1,7 @@
 build/
+dist/
 target/
 *.swp
 bin/
 dl/
+*/__pycache__/
