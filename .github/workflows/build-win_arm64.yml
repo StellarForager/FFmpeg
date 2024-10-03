@@ -17,5 +17,6 @@ jobs:
         with:
           WHL_PLATFORM: "win_arm64"
           ARCH: "aarch64"
-          CROSS_COMPILE: "mingw-w64-aarch64"
+          CROSS_COMPILE: "aarch64-w64-mingw32"
+          CROSS_COMPILE_PKG_SUFFIX: "mingw-w64-aarch64"
           PLATFORM: "mingw32"
