@@ -2,7 +2,8 @@
 Minimal FFmpeg with h.264 for Xdcheckin.
 
 ## Build Status
-
+[![Build for macosx_12_7_x86_64](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-macosx_12_7_x86_64.yml/badge.svg)](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-macosx_12_7_x86_64.yml) <br>
+[![Build for macosx_14_7_arm64](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-macosx_14_7_arm64.yml/badge.svg)](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-macosx_14_7_arm64.yml) <br>
 [![Build for manylinux2010_i686](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-manylinux2010_i686.yml/badge.svg)](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-manylinux2010_i686.yml) <br>
 [![Build for manylinux2010_x86_64](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-manylinux2010_x86_64.yml/badge.svg)](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-manylinux2010_x86_64.yml) <br>
 [![Build for manylinux2014_aarch64](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-manylinux2014_aarch64.yml/badge.svg)](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-manylinux2014_aarch64.yml) <br>
