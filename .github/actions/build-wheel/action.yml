@@ -1,15 +1,29 @@
-name: Build for manylinux2010_x86_64
-
-on:
-  workflow_call:
-  workflow_dispatch:
-
-jobs:
-  build-manylinux2010_x86_64:
-    name: Build for manylinux2010_x86_64
-    runs-on: ubuntu-latest
-
-    steps:
+name: Build Wheel Action
+description: Build FFmpeg and Package Wheel.
+inputs:
+  WHL_PLATFORM:
+    description: "Wheel platform"
+    required: false
+    default: "manylinux2010_x86_64"
+  ARCH:
+    description: "Architecture"
+    required: false
+    default: ""
+  CROSS_COMPILE:
+    description: "Cross compile prefix"
+    required: false
+    default: ""
+  PLATFORM:
+    description: "Platform"
+    required: false
+    default: ""
+  PATH:
+    description: "Path to prepend"
+    required: false
+    default: ""
+runs:
+  using: "composite"
+  steps:
     - name: Checkout repository
       uses: actions/checkout@v4.1.1
 
@@ -19,12 +33,12 @@ jobs:
         python-version: "3.10"
         cache: pip
 
-    - name: Export environment variables
+    - name: Export environment variables from inputs
       run: |
-        echo "WHL_PLATFORM=manylinux2010_x86_64" >> $GITHUB_ENV
-        echo "ARCH=" >> $GITHUB_ENV
-        echo "CROSS_COMPILE=" >> $GITHUB_ENV
-        echo "PLATFORM=" >> $GITHUB_ENV
+        echo "WHL_PLATFORM=${{ inputs.WHL_PLATFORM }}" >> $GITHUB_ENV
+        echo "ARCH=${{ inputs.ARCH }}" >> $GITHUB_ENV
+        echo "CROSS_COMPILE=${{ inputs.CROSS_COMPILE }}" >> $GITHUB_ENV
+        echo "PLATFORM=${{ inputs.PLATFORM }}" >> $GITHUB_ENV
         echo "PATH=$PATH" >> $GITHUB_ENV
 
     - name: List environment variables
@@ -34,8 +48,6 @@ jobs:
         echo "CROSS_COMPILE=${{ env.CROSS_COMPILE }}"
         echo "PLATFORM=${{ env.PLATFORM }}"
         echo "PATH=${{ env.PATH }}"
-
-      working-directory: ${{ github.workspace }}
 
     - name: Install dependencies
       run: |
@@ -49,19 +61,17 @@ jobs:
         find build/ffmpeg*/ -type f \( -name "ffmpeg" -o -name "ffmpeg.exe" -o -name "ffprobe" -o -name "ffprobe.exe" \) -exec cp {} src/xdcheckin_ffmpeg/bin/ \;
         ldd src/xdcheckin_ffmpeg/bin/ff* || true
         file src/xdcheckin_ffmpeg/bin/ff* || true
-      working-directory: ${{ github.workspace }}
 
     - name: Build package
       run: |
         python -m build
         whl=$(ls Xdcheckin_FFmpeg-*.*.*-py*-none-any.whl)
         mv "$whl" `echo "$whl" | sed 's/-any\.whl/-${{ env.WHL_PLATFORM }}\.whl/'`
-      working-directory: ${{ github.workspace }}
 
     - name: Upload package
       uses: actions/upload-artifact@v4.3.1
       with:
         if-no-files-found: error
-        name: dist_wheel
+        name: dist
         path: |
           dist/*.whl
