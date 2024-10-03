@@ -56,11 +56,12 @@ runs:
         python -m build
         whl=$(ls Xdcheckin_FFmpeg-*.*.*-py*-none-any.whl)
         mv "$whl" `echo "$whl" | sed 's/-any\.whl/-${{ env.WHL_PLATFORM }}\.whl/'`
+        echo "UPLOAD_NAME=dist-${{ env.WHL_PLATFORM }}" >> $GITHUB_ENV
 
     - name: Upload package
       uses: actions/upload-artifact@v4.3.1
       with:
         if-no-files-found: error
-        name: dist
+        name: ${{ env.UPLOAD_NAME }}
         path: |
           dist/*.whl
