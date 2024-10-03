@@ -267,6 +267,8 @@ cd $BUILD_DIR/ffmpeg*
 #   --enable-protocol=rtmps
 PATH="$BIN_DIR:$PATH" make -j $jval
 
+if [ "$PLATFORM" = "darwin" ]; then
+  unset MACOSX_DEPLOYMENT_TARGET
+fi
 hash -r
-unset MACOSX_DEPLOYMENT_TARGET
 cd "$ENV_ROOT"
