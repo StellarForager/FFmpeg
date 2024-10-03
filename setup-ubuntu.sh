@@ -14,6 +14,3 @@ sudo apt-get -y install \
   pkg-config
 [ -n "$CROSS_COMPILE" ] && sudo apt-get -y \
   "gcc-$CROSS_COMPILE" "g++-$CROSS_COMPILE"
-
-./build.sh "$@"
-
