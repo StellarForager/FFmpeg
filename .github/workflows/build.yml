@@ -1,6 +1,11 @@
 name: Build Packages
 
 on:
+  push:
+    branches:
+      - master
+    paths:
+      - pyproject.toml
   workflow_call:
   workflow_dispatch:
 
