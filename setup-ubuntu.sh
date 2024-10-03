@@ -18,7 +18,7 @@ if [ -n "$CROSS_COMPILE_PKG_SUFFIX" ]; then
     tar -xf llvm-mingw-*.tar.xz
     export PATH="$(realpath "llvm-mingw-*/"):$PATH"
   else
-    apt-get \
+    sudo apt-get install \
       --allow-remove-essential --allow-change-held-packages -y \
       "gcc-$CROSS_COMPILE_PKG_SUFFIX" "g++-$CROSS_COMPILE_PKG_SUFFIX"
   fi
