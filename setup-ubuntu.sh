@@ -12,8 +12,11 @@ sudo apt-get \
   gawk \
   libtool \
   pkg-config
+echo "CROSS_COMPILE_PKG_SUFFIX=$CROSS_COMPILE_PKG_SUFFIX"
 if [ -n "$CROSS_COMPILE_PKG_SUFFIX" ]; then
+  echo "NON EMPTY"
   if [ "CROSS_COMPILE_PKG_SUFFIX" = "mingw-w64-aarch64" ]; then
+    echo "EQ mingw-w64-aarch64"
     wget https://github.com/mstorsjo/llvm-mingw/releases/download/20241001/llvm-mingw-20241001-msvcrt-ubuntu-20.04-x86_64.tar.xz
     tar -xf llvm-mingw-*.tar.xz
     export PATH="$(realpath "llvm-mingw-*/"):$PATH"
