@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  build-manylinux2010_i686:
     name: Build
     runs-on: ubuntu-latest
     steps:
