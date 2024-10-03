@@ -1,0 +1,21 @@
+name: Build for win32
+
+on:
+  workflow_call:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4.1.1
+
+      - name: Build FFmpeg and wheel
+        uses: ./.github/actions/build-wheel
+        with:
+          WHL_PLATFORM: "win32"
+          ARCH: "i686"
+          CROSS_COMPILE: "i686-w64-mingw32"
+          PLATFORM: "mingw32"
