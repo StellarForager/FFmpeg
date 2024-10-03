@@ -58,6 +58,16 @@ runs:
         sudo apt install -y file
         pip install build
 
+    - name: List environment variables
+      shell: bash
+      run: |
+        echo "WHL_PLATFORM=${{ env.WHL_PLATFORM }}"
+        echo "ARCH=${{ env.ARCH }}"
+        echo "CROSS_COMPILE=${{ env.CROSS_COMPILE }}"
+        echo "CROSS_COMPILE_PKG_SUFFIX=${{ env.CROSS_COMPILE_PKG_SUFFIX }}"
+        echo "PLATFORM=${{ env.PLATFORM }}"
+        echo "PATH=${{ env.PATH }}"
+
     - name: Build FFmpeg
       shell: bash
       run: |
