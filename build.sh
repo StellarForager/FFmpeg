@@ -63,6 +63,17 @@ esac
 echo "$ARCH" | grep -qE 'x86|i386|i686' && is_x86=1 || is_x86=0
 [ $is_x86 -ne 1 ] && echo "Not using yasm or nasm on non-x86 PLATFORM..."
 
+if [ "$PLATFORM" = "darwin" ]; then
+  case $is_x86 in
+    1)
+      MACOSX_DEPLOYMENT_TARGET="10.9"
+      ;;
+    0)
+      MACOSX_DEPLOYMENT_TARGET="11"
+      ;;
+  esac
+fi
+
 # CROSS_COMPILE="aarch64-linux-gnu"
 CROSS_COMPILE=${CROSS_COMPILE:-""}
 [ -n "$CROSS_COMPILE" ] &&
@@ -157,7 +168,9 @@ if [ $is_x86 -eq 1 ]; then
       ;;
   esac
   [ $rebuild -eq 1 -a -f Makefile ] && make distclean || true
-  [ ! -f config.status ] && ./configure --prefix=$TARGET_DIR --bindir=$BIN_DIR
+  [ ! -f config.status ] && \
+  $([ "$PLATFORM" = "darwin" ] && echo "MACOSX_DEPLOYMENT_TARGET=$MACOSX_DEPLOYMENT_TARGET") \
+  ./configure --prefix=$TARGET_DIR --bindir=$BIN_DIR
   make -j $jval
   make install
 fi
@@ -165,7 +178,8 @@ fi
 # echo "*** Building OpenSSL ***"
 # cd $BUILD_DIR/openssl*
 # [ $rebuild -eq 1 -a -f Makefile ] && make distclean || true
-# PATH="$BIN_DIR:$PATH" CFLAGS="-Os -fPIC" CXXFLAGS="-Os -fPIC" LDFLAGS="-Wl,-s" ./Configure \
+# $([ "$PLATFORM" = "darwin" ] && echo "MACOSX_DEPLOYMENT_TARGET=$MACOSX_DEPLOYMENT_TARGET") \
+#   PATH="$BIN_DIR:$PATH" CFLAGS="-Os -fPIC" CXXFLAGS="-Os -fPIC" LDFLAGS="-Wl,-s" ./Configure \
 #   $([ "$PLATFORM" = "darwin" ] && echo "darwin64-$ARCH-cc") \
 #   $([ ! "$PLATFORM" = "darwin" ] && echo "$PLATFORM-$ARCH") \
 #   $([ -n "$CROSS_COMPILE" ] && echo "--cross-compile-prefix=$CROSS_COMPILE") \
@@ -180,7 +194,9 @@ fi
 echo "*** Building x264 ***"
 cd $BUILD_DIR/x264*
 [ $rebuild -eq 1 -a -f Makefile ] && make distclean || true
-[ ! -f config.status ] && PATH="$BIN_DIR:$PATH" CFLAGS="-Os" CXXFLAGS="-Os" LDFLAGS="-Wl,-s" ./configure \
+[ ! -f config.status ] && \
+  $([ "$PLATFORM" = "darwin" ] && echo "MACOSX_DEPLOYMENT_TARGET=$MACOSX_DEPLOYMENT_TARGET") \
+  PATH="$BIN_DIR:$PATH" CFLAGS="-Os" CXXFLAGS="-Os" LDFLAGS="-Wl,-s" ./configure \
   $([ -n "$CROSS_COMPILE" ] && echo "--host=${CROSS_COMPILE}") \
   $([ -n "$CROSS_COMPILE" ] && echo "--cross-prefix=${CROSS_COMPILE}-") \
   --prefix=$TARGET_DIR --enable-static --enable-strip --enable-pic --disable-opencl \
@@ -192,7 +208,9 @@ make install
 # cd $BUILD_DIR/fdk-aac*
 # [ $rebuild -eq 1 -a -f Makefile ] && make distclean || true
 # autoreconf -fiv
-# [ ! -f config.status ] && CFLAGS="-Os" CXXFLAGS="-Os" LDFLAGS="-Wl,-s" ./configure \
+# [ ! -f config.status ] && \
+#   $([ "$PLATFORM" = "darwin" ] && echo "MACOSX_DEPLOYMENT_TARGET=$MACOSX_DEPLOYMENT_TARGET") \
+#   CFLAGS="-Os" CXXFLAGS="-Os" LDFLAGS="-Wl,-s" ./configure \
 #   $([ -n "$CROSS_COMPILE" ] && echo "--host=${CROSS_COMPILE}") \
 #   --prefix=$TARGET_DIR --disable-shared --enable-static --with-pic 
 # make -j $jval
@@ -202,10 +220,12 @@ echo "*** Building FFmpeg ***"
 cd $BUILD_DIR/ffmpeg*
 # patch -p1 < "$ENV_ROOT/0000-ffmpeg-fdk-acc-free.patch"
 [ $rebuild -eq 1 -a -f Makefile ] && make distclean || true
-[ ! -f config.status ] && PATH="$BIN_DIR:$PATH" \
-PKG_CONFIG_PATH="$TARGET_DIR/lib/pkgconfig:$TARGET_DIR/lib64/pkgconfig$([ "$PLATFORM" = "darwin" ] && \
+[ ! -f config.status ] && \
+  $([ "$PLATFORM" = "darwin" ] && echo "MACOSX_DEPLOYMENT_TARGET=$MACOSX_DEPLOYMENT_TARGET") \
+  PATH="$BIN_DIR:$PATH" \
+  PKG_CONFIG_PATH="$TARGET_DIR/lib/pkgconfig:$TARGET_DIR/lib64/pkgconfig$([ "$PLATFORM" = "darwin" ] && \
   echo ":/usr/local/lib/pkgconfig:/usr/local/share/pkgconfig:/usr/local/Cellar/openssl@3/${VER_OPENSSL}_1/lib/pkgconfig")" \
-./configure \
+  ./configure \
   --arch="$ARCH" \
   --target-os="$PLATFORM" \
   $([ "$PLATFORM" = "darwin" ] && echo "--cc=/usr/bin/clang") \
