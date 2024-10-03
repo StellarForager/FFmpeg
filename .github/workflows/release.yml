@@ -41,9 +41,7 @@ jobs:
       - name: Gather artifacts
         run: |
           mkdir -pv dist
-          mv dist-*/*.whl dist/ || true
-          ls -la
-          ls -la dist*
+          mv dist-*/*.whl dist/
 
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1.8
