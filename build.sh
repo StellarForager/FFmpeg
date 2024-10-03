@@ -100,14 +100,14 @@ cd $BUILD_DIR
 
 if [ $is_x86 -eq 1 ]; then
   case "$PLATFORM" in
-    'darwin'|'mingw32')
+    'darwin')
       download \
         "yasm-$VER_YASM.tar.gz" \
         "" \
         "nil" \
         "http://www.tortall.net/projects/yasm/releases/"
       ;;
-    'linux')
+    'linux'|'mingw32')
       download \
         "nasm-$VER_NASM.tar.bz2" \
         "" \
@@ -147,11 +147,11 @@ TARGET_DIR_SED=$(echo $TARGET_DIR | awk '{gsub(/\//, "\\/"); print}')
 
 if [ $is_x86 -eq 1 ]; then
   case "$PLATFORM" in
-    'darwin'|'mingw32')
+    'darwin')
       echo "*** Building yasm ***"
       cd $BUILD_DIR/yasm*
       ;;
-    'linux')
+    'linux'|'mingw32')
       echo "*** Building nasm ***"
       cd $BUILD_DIR/nasm*
       ;;
