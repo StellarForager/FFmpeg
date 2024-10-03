@@ -54,6 +54,7 @@ runs:
       shell: bash
       run: |
         CROSS_COMPILE_PKG_SUFFIX=${{ env.CROSS_COMPILE_PKG_SUFFIX }} sh setup-ubuntu.sh
+        echo "PATH=$PATH"
         echo "PATH=$PATH" >> $GITHUB_ENV
         sudo apt install -y file
         pip install build
