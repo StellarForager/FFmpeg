@@ -1,7 +1,8 @@
 name: Build Packages
 
 on:
-  push
+  workflow_call:
+  workflow_dispatch:
 
 jobs:
   build-manylinux2010_i686:
