@@ -1,7 +1,5 @@
 name: Build Packages
 
-on:
-  push:
 
 jobs:
   build-manylinux2010_i686:
