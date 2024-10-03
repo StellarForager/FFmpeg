@@ -1,9 +1,9 @@
 #!/bin/bash
 
 sudo apt update
-sudo apt-get -y install \
+sudo NEEDRESTART_MODE=a apt-get -y install \
   build-essential curl tar pkg-config
-sudo apt-get -y install \
+sudo NEEDRESTART_MODE=a apt-get -y install \
   autoconf \
   automake \
   build-essential \
@@ -12,5 +12,5 @@ sudo apt-get -y install \
   libssl-dev \
   libtool \
   pkg-config
-[ -n "$CROSS_COMPILE" ] && sudo apt-get -y \
+[ -n "$CROSS_COMPILE" ] && sudo NEEDRESTART_MODE=a apt-get -y \
   "gcc-$CROSS_COMPILE" "g++-$CROSS_COMPILE"
