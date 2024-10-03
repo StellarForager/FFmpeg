@@ -18,4 +18,4 @@ jobs:
           WHL_PLATFORM: "win_arm64"
           ARCH: "aarch64"
           CROSS_COMPILE: "aarch64-w64-mingw32"
-          PLATFORM: "linux"
+          PLATFORM: "mingw32"
