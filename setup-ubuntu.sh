@@ -15,5 +15,5 @@ sudo NEEDRESTART_MODE=a apt-get \
   libtool \
   pkg-config
 [ -n "$CROSS_COMPILE" ] && sudo NEEDRESTART_MODE=a apt-get \
-  --allow-remove-essential --allow-change-held-packages -y \
+  --allow-remove-essential --allow-change-held-packages --force-yes -y \
   "gcc-$CROSS_COMPILE" "g++-$CROSS_COMPILE"
