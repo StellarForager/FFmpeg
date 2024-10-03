@@ -66,10 +66,10 @@ echo "$ARCH" | grep -qE 'x86|i386|i686' && is_x86=1 || is_x86=0
 if [ "$PLATFORM" = "darwin" ]; then
   case $is_x86 in
     1)
-      MACOSX_DEPLOYMENT_TARGET="10.9"
+      export MACOSX_DEPLOYMENT_TARGET="10.9"
       ;;
     0)
-      MACOSX_DEPLOYMENT_TARGET="11"
+      export MACOSX_DEPLOYMENT_TARGET="11"
       ;;
   esac
 fi
@@ -169,7 +169,6 @@ if [ $is_x86 -eq 1 ]; then
   esac
   [ $rebuild -eq 1 -a -f Makefile ] && make distclean || true
   [ ! -f config.status ] && \
-  $([ "$PLATFORM" = "darwin" ] && echo "MACOSX_DEPLOYMENT_TARGET=$MACOSX_DEPLOYMENT_TARGET") \
   ./configure --prefix=$TARGET_DIR --bindir=$BIN_DIR
   make -j $jval
   make install
@@ -178,7 +177,6 @@ fi
 # echo "*** Building OpenSSL ***"
 # cd $BUILD_DIR/openssl*
 # [ $rebuild -eq 1 -a -f Makefile ] && make distclean || true
-# $([ "$PLATFORM" = "darwin" ] && echo "MACOSX_DEPLOYMENT_TARGET=$MACOSX_DEPLOYMENT_TARGET") \
 #   PATH="$BIN_DIR:$PATH" CFLAGS="-Os -fPIC" CXXFLAGS="-Os -fPIC" LDFLAGS="-Wl,-s" ./Configure \
 #   $([ "$PLATFORM" = "darwin" ] && echo "darwin64-$ARCH-cc") \
 #   $([ ! "$PLATFORM" = "darwin" ] && echo "$PLATFORM-$ARCH") \
@@ -195,7 +193,6 @@ echo "*** Building x264 ***"
 cd $BUILD_DIR/x264*
 [ $rebuild -eq 1 -a -f Makefile ] && make distclean || true
 [ ! -f config.status ] && \
-  $([ "$PLATFORM" = "darwin" ] && echo "MACOSX_DEPLOYMENT_TARGET=$MACOSX_DEPLOYMENT_TARGET") \
   PATH="$BIN_DIR:$PATH" CFLAGS="-Os" CXXFLAGS="-Os" LDFLAGS="-Wl,-s" ./configure \
   $([ -n "$CROSS_COMPILE" ] && echo "--host=${CROSS_COMPILE}") \
   $([ -n "$CROSS_COMPILE" ] && echo "--cross-prefix=${CROSS_COMPILE}-") \
@@ -209,7 +206,6 @@ make install
 # [ $rebuild -eq 1 -a -f Makefile ] && make distclean || true
 # autoreconf -fiv
 # [ ! -f config.status ] && \
-#   $([ "$PLATFORM" = "darwin" ] && echo "MACOSX_DEPLOYMENT_TARGET=$MACOSX_DEPLOYMENT_TARGET") \
 #   CFLAGS="-Os" CXXFLAGS="-Os" LDFLAGS="-Wl,-s" ./configure \
 #   $([ -n "$CROSS_COMPILE" ] && echo "--host=${CROSS_COMPILE}") \
 #   --prefix=$TARGET_DIR --disable-shared --enable-static --with-pic 
@@ -221,7 +217,6 @@ cd $BUILD_DIR/ffmpeg*
 # patch -p1 < "$ENV_ROOT/0000-ffmpeg-fdk-acc-free.patch"
 [ $rebuild -eq 1 -a -f Makefile ] && make distclean || true
 [ ! -f config.status ] && \
-  $([ "$PLATFORM" = "darwin" ] && echo "MACOSX_DEPLOYMENT_TARGET=$MACOSX_DEPLOYMENT_TARGET") \
   PATH="$BIN_DIR:$PATH" \
   PKG_CONFIG_PATH="$TARGET_DIR/lib/pkgconfig:$TARGET_DIR/lib64/pkgconfig$([ "$PLATFORM" = "darwin" ] && \
   echo ":/usr/local/lib/pkgconfig:/usr/local/share/pkgconfig:/usr/local/Cellar/openssl@3/${VER_OPENSSL}_1/lib/pkgconfig")" \
@@ -273,4 +268,5 @@ cd $BUILD_DIR/ffmpeg*
 PATH="$BIN_DIR:$PATH" make -j $jval
 
 hash -r
+unset MACOSX_DEPLOYMENT_TARGET
 cd "$ENV_ROOT"
