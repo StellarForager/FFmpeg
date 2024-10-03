@@ -53,8 +53,7 @@ runs:
     - name: Install dependencies
       shell: bash
       run: |
-        CROSS_COMPILE_PKG_SUFFIX=${{ env.CROSS_COMPILE_PKG_SUFFIX }} sh setup-ubuntu.sh
-        sudo apt install -y file
+        CROSS_COMPILE_PKG_SUFFIX=${{ env.CROSS_COMPILE_PKG_SUFFIX }} sh setup-dependencies.sh
         pip install build
 
     - name: List environment variables
@@ -71,8 +70,6 @@ runs:
       run: |
         ARCH=${{ env.ARCH }} CROSS_COMPILE=${{ env.CROSS_COMPILE }} PLATFORM=${{ env.PLATFORM }} PATH="`realpath llvm-mingw-*/bin/`:$PATH" sh build.sh
         find build/ffmpeg*/ -type f \( -name "ffmpeg" -o -name "ffmpeg.exe" -o -name "ffprobe" -o -name "ffprobe.exe" \) -exec cp {} src/xdcheckin_ffmpeg/bin/ \;
-        ldd src/xdcheckin_ffmpeg/bin/ff* || true
-        file src/xdcheckin_ffmpeg/bin/ff* || true
 
     - name: Build package
       shell: bash
