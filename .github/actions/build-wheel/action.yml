@@ -63,7 +63,7 @@ runs:
     - name: Build package
       shell: bash
       run: |
-        python -m build -w -C="--global-option=--plat-name" -C="--global-option=${{ env.WHL_PLATFORM }}"
+        python -m build -w -C="--build-option=--plat-name" -C="--build-option=${{ env.WHL_PLATFORM }}"
         echo "UPLOAD_NAME=dist-${{ env.WHL_PLATFORM }}" >> $GITHUB_ENV
 
     - name: Upload package
