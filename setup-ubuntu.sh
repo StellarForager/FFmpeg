@@ -17,6 +17,7 @@ if [ -n "$CROSS_COMPILE_PKG_SUFFIX" ]; then
     wget https://github.com/mstorsjo/llvm-mingw/releases/download/20241001/llvm-mingw-20241001-msvcrt-ubuntu-20.04-x86_64.tar.xz
     tar -xf llvm-mingw-*.tar.xz
     export PATH="$(realpath "llvm-mingw-*/"):$PATH"
+    echo "PATH=$PATH"
   else
     sudo apt-get install \
       --allow-remove-essential --allow-change-held-packages -y \
