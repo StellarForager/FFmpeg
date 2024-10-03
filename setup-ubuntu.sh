@@ -2,10 +2,10 @@
 
 sudo apt update
 sudo NEEDRESTART_MODE=a apt-get \
-  --allow-remove-essential --allow-change-held-packages -y install \
+  --allow-remove-essential --allow-change-held-packages --force-yes -y install \
   build-essential curl tar pkg-config
 sudo NEEDRESTART_MODE=a apt-get \
-  --allow-remove-essential --allow-change-held-packages -y install \
+  --allow-remove-essential --allow-change-held-packages --force-yes -y install \
   autoconf \
   automake \
   build-essential \
