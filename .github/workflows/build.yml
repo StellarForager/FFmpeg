@@ -1,0 +1,30 @@
+name: Build Packages
+
+on:
+  workflow_call:
+  workflow_dispatch:
+
+jobs:
+  build-manylinux2010_i686:
+    name: Build for manylinux2010_i686
+    uses: ./.github/workflows/build-manylinux2010_i686.yml
+
+  build-manylinux2010_x86_64:
+    name: Build for manylinux2010_x86_64
+    uses: ./.github/workflows/build-manylinux2010_x86_64.yml
+
+  build-manylinux2014_aarch64:
+    name: Build for manylinux2014_aarch64
+    uses: ./.github/workflows/build-manylinux2014_aarch64.yml
+
+  build-win32:
+    name: Build for win32
+    uses: ./.github/workflows/build-win32.yml
+
+  build-win_amd64:
+    name: Build for win_amd64
+    uses: ./.github/workflows/build-win_amd64.yml
+
+  build-win_arm64:
+    name: Build for win_arm64
+    uses: ./.github/workflows/build-win_arm64.yml
