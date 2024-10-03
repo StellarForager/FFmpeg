@@ -64,7 +64,7 @@ runs:
       shell: bash
       run: |
         python -m build
-        whl=$(ls Xdcheckin_FFmpeg-*.*.*-py*-none-any.whl)
+        whl=$(ls xdcheckin_ffmpeg-*.*.*-py*-none-any.whl)
         mv "$whl" `echo "$whl" | sed 's/-any\.whl/-${{ env.WHL_PLATFORM }}\.whl/'`
         echo "UPLOAD_NAME=dist-${{ env.WHL_PLATFORM }}" >> $GITHUB_ENV
 
