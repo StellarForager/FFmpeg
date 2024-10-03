@@ -63,17 +63,6 @@ esac
 echo "$ARCH" | grep -qE 'x86|i386|i686' && is_x86=1 || is_x86=0
 [ $is_x86 -ne 1 ] && echo "Not using yasm or nasm on non-x86 PLATFORM..."
 
-if [ "$PLATFORM" = "darwin" ]; then
-  case $is_x86 in
-    1)
-      export MACOSX_DEPLOYMENT_TARGET="10.9"
-      ;;
-    0)
-      export MACOSX_DEPLOYMENT_TARGET="11"
-      ;;
-  esac
-fi
-
 # CROSS_COMPILE="aarch64-linux-gnu"
 CROSS_COMPILE=${CROSS_COMPILE:-""}
 [ -n "$CROSS_COMPILE" ] &&
@@ -267,8 +256,5 @@ cd $BUILD_DIR/ffmpeg*
 #   --enable-protocol=rtmps
 PATH="$BIN_DIR:$PATH" make -j $jval
 
-if [ "$PLATFORM" = "darwin" ]; then
-  unset MACOSX_DEPLOYMENT_TARGET
-fi
 hash -r
 cd "$ENV_ROOT"
