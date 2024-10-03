@@ -9,7 +9,6 @@ sudo apt-get \
   autoconf \
   automake \
   build-essential \
-  file \
   gawk \
   libtool \
   pkg-config
