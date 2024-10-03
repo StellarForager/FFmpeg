@@ -3,6 +3,8 @@ __all__ = ("ffmpeg", "ffmpeg_version")
 from functools import lru_cache as _lru_cache
 import importlib.resources as _resources
 import os as _os
+from platform import machine as _machine
+from struct import calcsize as _calcsize
 import subprocess as _subprocess
 import sys as _sys
 
@@ -26,6 +28,24 @@ def _is_valid_exe(exe):
 	except (OSError, ValueError, _subprocess.CalledProcessError):
 		return False
 
+def _get_platform():
+    bits = _calcsize("P") * 8
+    if _sys.platform.startswith("linux"):
+        architecture = _machine()
+        if architecture == "aarch64":
+            return "linuxaarch64"
+        return "linux{}".format(bits)
+    elif _sys.platform.startswith("freebsd"):
+        return "freebsd{}".format(bits)
+    elif _sys.platform.startswith("win"):
+        return "win{}".format(bits)
+    elif _sys.platform.startswith("cygwin"):
+        return "win{}".format(bits)
+    elif _sys.platform.startswith("darwin"):
+        return "osx{}".format(bits)
+    else:  # pragma: no cover
+        return None
+
 def _get_bin_dir():
 	if _sys.version_info < (3, 9):
 		ctx = _resources.path("xdcheckin_ffmpeg.bin", "__init__.py")
@@ -33,7 +53,7 @@ def _get_bin_dir():
 		ctx = _resources.as_file(_resources.files(
 			"xdcheckin_ffmpeg.bin") / "__init__.py"
 		)
-	with context as path:
+	with ctx as path:
 		pass
 	return str(path.parent)
 
@@ -43,7 +63,7 @@ def ffmpeg():
 
 	:return: Path string.
 	"""
-	plat = get_platform()
+	plat = _get_platform()
 	exe = _os.path.join(_get_bin_dir(), "ffmpeg")
 	if exe and _os.path.isfile(exe) and _is_valid_exe(exe):
 		return exe
@@ -62,8 +82,8 @@ def ffmpeg_version():
 
 	:return: Version string.
 	"""
-	exe = get_ffmpeg_exe()
-	line = subprocess.check_output(
+	exe = ffmpeg()
+	line = _subprocess.check_output(
 		[exe, "-version"], **_popen_kwargs()
 	).split(b"\n", 1)[0]
 	line = line.decode(errors = "ignore").strip()
