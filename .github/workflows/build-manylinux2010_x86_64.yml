@@ -21,7 +21,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        sudo sh setup-ubuntu.sh
+        sh setup-ubuntu.sh
         pip install build
 
     - name: Export environment variables
