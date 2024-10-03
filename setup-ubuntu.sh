@@ -1,17 +1,19 @@
 #!/bin/bash
 
 sudo apt update
-sudo NEEDRESTART_MODE=a apt-get \
-  --allow-remove-essential --allow-change-held-packages --force-yes -y install \
+sudo apt-get \
+  --allow-remove-essential -y install \
   build-essential curl tar pkg-config
-sudo NEEDRESTART_MODE=a apt-get \
-  --allow-remove-essential --allow-change-held-packages --force-yes -y install \
+sudo apt-get \
+  --allow-remove-essential -y install \
   autoconf \
   automake \
   build-essential \
   gawk \
   libtool \
   pkg-config
-[ -n "$CROSS_COMPILE" ] && sudo NEEDRESTART_MODE=a apt-get \
-  --allow-remove-essential --allow-change-held-packages --force-yes -y \
-  "gcc-$CROSS_COMPILE" "g++-$CROSS_COMPILE"
+if [ -n "$CROSS_COMPILE" ]; then
+  apt-get \
+    --allow-remove-essential --allow-change-held-packages -y \
+    "gcc-$CROSS_COMPILE" "g++-$CROSS_COMPILE"
+fi
