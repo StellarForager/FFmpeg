@@ -5,6 +5,14 @@ on:
   workflow_dispatch:
 
 jobs:
+  build-macosx_12_7_x86_64:
+    name: Build for macosx_12_7_x86_64
+    uses: ./.github/workflows/build-macosx_12_7_x86_64.yml
+
+  build-macosx_14_7_arm64:
+    name: Build for macosx_14_7_arm64
+    uses: ./.github/workflows/build-macosx_14_7_arm64.yml
+
   build-manylinux2010_i686:
     name: Build for manylinux2010_i686
     uses: ./.github/workflows/build-manylinux2010_i686.yml
