@@ -1,0 +1,17 @@
+name: Build and Package FFmpeg
+
+on:
+  workflow_call:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build FFmpeg and Package Wheel
+        uses: ./.github/actions/build-wheel
+        with:
+          WHL_PLATFORM: "manylinux2010_x86_64"
+          ARCH: ""
+          CROSS_COMPILE: ""
+          PLATFORM: ""
