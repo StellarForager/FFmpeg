@@ -1,4 +1,4 @@
-name: Build and Package FFmpeg
+name: Build for manylinux2010_x86_64
 
 on:
   workflow_call:
@@ -6,8 +6,12 @@ on:
 
 jobs:
   build:
+    name: Build for manylinux2010_x86_64
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4.1.1
+
       - name: Build FFmpeg and Package Wheel
         uses: ./.github/actions/build-wheel
         with:
