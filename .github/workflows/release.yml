@@ -1,0 +1,49 @@
+name: Build and Release
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - pyproject.toml
+  workflow_dispatch:
+
+concurrency: 
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check-version:
+    name: Check for version increment
+    uses: ./.github/workflows/check-version.yml
+
+  build:
+    name: Build packages
+    uses: ./.github/workflows/build.yml
+    needs: check-version
+    secrets: inherit
+    if: ${{ needs.check-version.outputs.version_change == 'true' }}
+
+  publish:
+    name: Publish to PyPI
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: publish-pypi
+      url: https://pypi.org/project/Xdcheckin-FFmpeg
+    permissions:
+      id-token: write
+
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v4.1.4
+
+      - name: Gather artifacts
+        run: |
+          mkdir -pv dist
+          mv dist-*/*.whl dist/
+
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1.8
+        with:
+          packages-dir: dist/
