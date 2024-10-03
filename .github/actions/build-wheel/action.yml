@@ -37,6 +37,7 @@ runs:
         cache: pip
 
     - name: Setup environment variables
+      shell: bash
       run: |
         echo "WHL_PLATFORM=${{ inputs.WHL_PLATFORM }}" >> $GITHUB_ENV
         echo "ARCH=${{ inputs.ARCH }}" >> $GITHUB_ENV
@@ -44,6 +45,7 @@ runs:
         echo "PLATFORM=${{ inputs.PLATFORM }}" >> $GITHUB_ENV
 
     - name: Install dependencies
+      shell: bash
       run: |
         CROSS_COMPILE=${{ env.CROSS_COMPILE }} sh setup-ubuntu.sh
         echo "PATH=$PATH" >> $GITHUB_ENV
@@ -51,6 +53,7 @@ runs:
         pip install build
 
     - name: Build FFmpeg
+      shell: bash
       run: |
         ARCH=${{ env.ARCH }} CROSS_COMPILE=${{ env.CROSS_COMPILE }} PLATFORM=${{ env.PLATFORM }} PATH="${{ env.PATH }}:$PATH" sh build.sh
         find build/ffmpeg*/ -type f \( -name "ffmpeg" -o -name "ffmpeg.exe" -o -name "ffprobe" -o -name "ffprobe.exe" \) -exec cp {} src/xdcheckin_ffmpeg/bin/ \;
@@ -58,6 +61,7 @@ runs:
         file src/xdcheckin_ffmpeg/bin/ff* || true
 
     - name: Build package
+      shell: bash
       run: |
         python -m build
         whl=$(ls Xdcheckin_FFmpeg-*.*.*-py*-none-any.whl)
