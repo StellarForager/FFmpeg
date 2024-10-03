@@ -12,7 +12,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4.1.1
 
-      - name: Build FFmpeg and package wheel
+      - name: Build FFmpeg and wheel
         uses: ./.github/actions/build-wheel
         with:
           WHL_PLATFORM: "manylinux2010_i686"
