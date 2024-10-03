@@ -1,0 +1,14 @@
+name: Build for manylinux2010_x86_64
+
+on:
+  workflow_call:
+  workflow_dispatch:
+
+jobs:
+  build-manylinux2010_x86_64:
+    name: Build for manylinux2010_x86_64
+    runs-on: ubuntu-latest
+    steps:
+    - name: Install dependencies
+      run: |
+        sudo sh setup-ubuntu.sh
