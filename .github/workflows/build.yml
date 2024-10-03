@@ -13,9 +13,9 @@ jobs:
     name: Build for manylinux2010_x86_64
     uses: ./.github/workflows/build-manylinux2010_x86_64.yml
 
-  build-manylinux2014_aarch64:
-    name: Build for manylinux2014_aarch64
-    uses: ./.github/workflows/build-manylinux2014_aarch64.yml
+  build-manylinux2010_aarch64:
+    name: Build for manylinux2010_aarch64
+    uses: ./.github/workflows/build-manylinux2010_aarch64.yml
 
   build-win32:
     name: Build for win32
