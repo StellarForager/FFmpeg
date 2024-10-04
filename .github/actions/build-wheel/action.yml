@@ -54,6 +54,8 @@ runs:
       shell: bash
       run: |
         CROSS_COMPILE_PKG_SUFFIX=${{ env.CROSS_COMPILE_PKG_SUFFIX }} sh setup-dependencies.sh
+        if [ "$CROSS_COMPILE_PKG_SUFFIX" = "mingw-w64-aarch64" ]; then
+          echo `realpath llvm-mingw-*/bin/` >> $GITHUB_PATH
         pip install build
 
     - name: List environment variables
@@ -64,11 +66,12 @@ runs:
         echo "CROSS_COMPILE=${{ env.CROSS_COMPILE }}"
         echo "CROSS_COMPILE_PKG_SUFFIX=${{ env.CROSS_COMPILE_PKG_SUFFIX }}"
         echo "PLATFORM=${{ env.PLATFORM }}"
+        echo "PATH=$PATH"
 
     - name: Build FFmpeg
       shell: bash
       run: |
-        ARCH=${{ env.ARCH }} CROSS_COMPILE=${{ env.CROSS_COMPILE }} PLATFORM=${{ env.PLATFORM }} PATH="`realpath llvm-mingw-*/bin/`:$PATH" sh build.sh
+        ARCH=${{ env.ARCH }} CROSS_COMPILE=${{ env.CROSS_COMPILE }} PLATFORM=${{ env.PLATFORM }} sh build.sh
         find build/ffmpeg*/ -type f \( -name "ffmpeg" -o -name "ffmpeg.exe" -o -name "ffprobe" -o -name "ffprobe.exe" \) -exec cp {} src/xdcheckin_ffmpeg/bin/ \;
 
     - name: Build package
