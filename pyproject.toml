@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "Xdcheckin-FFmpeg"
-version = "1.0.0"
+version = "1.0.1"
 authors = [{name = "Pairman", email = "pairmanxlr@gmail.com"}]
 readme = "README.md"
 description = "Minimal static FFmpeg with h.264 for Xdcheckin."
