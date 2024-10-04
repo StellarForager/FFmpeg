@@ -25,6 +25,18 @@ jobs:
     name: Build for manylinux2014_aarch64
     uses: ./.github/workflows/build-manylinux2014_aarch64.yml
 
+  build-musllinux_1_1_i686:
+    name: Build for musllinux_1_1_i686
+    uses: ./.github/workflows/build-musllinux_1_1_i686.yml
+
+  build-musllinux_1_1_x86_64:
+    name: Build for musllinux_1_1_x86_64
+    uses: ./.github/workflows/build-musllinux_1_1_x86_64.yml
+
+  build-musllinux_1_2_aarch64:
+    name: Build for musllinux_1_2_aarch64
+    uses: ./.github/workflows/build-musllinux_1_2_aarch64.yml
+
   build-win32:
     name: Build for win32
     uses: ./.github/workflows/build-win32.yml
