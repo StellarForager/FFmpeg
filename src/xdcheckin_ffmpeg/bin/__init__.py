@@ -77,6 +77,7 @@ def ffmpeg():
 	if _is_valid_exe(exe):
 		return exe
 	return None
+
 def ffmpeg_version():
 	"""Get the version of the FFmpeg executable.
 
