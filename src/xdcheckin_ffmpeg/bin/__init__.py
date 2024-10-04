@@ -78,6 +78,7 @@ def ffmpeg():
 		return exe
 	return None
 
+@_lru_cache()
 def ffmpeg_version():
 	"""Get the version of the FFmpeg executable.
 
