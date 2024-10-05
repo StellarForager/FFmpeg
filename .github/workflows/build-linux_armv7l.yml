@@ -1,0 +1,22 @@
+name: Build for linux_armv7l
+
+on:
+  workflow_call:
+  workflow_dispatch:
+
+jobs:
+  build-linux_armv7l:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4.1.1
+
+      - name: Build FFmpeg and wheel
+        uses: ./.github/actions/build-wheel
+        with:
+          WHL_PLATFORM: "linux_armv7l"
+          ARCH: "aarch64"
+          CROSS_COMPILE: "arm-linux-gnueabihf"
+          CROSS_COMPILE_PKG_SUFFIX: "arm-linux-gnueabihf"
+          PLATFORM: "linux"
