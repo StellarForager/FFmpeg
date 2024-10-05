@@ -2,12 +2,16 @@
 Minimal FFmpeg with h.264 for Xdcheckin.
 
 ## Build Status
-[![Build for linux_aarch64](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-linux_aarch64.yml/badge.svg)](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-linux_aarch64.yml) <br>
-[![Build for linux_armv7l](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-linux_armv7l.yml/badge.svg)](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-linux_armv7l.yml) <br>
-[![Build for linux_i686](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-linux_i686.yml/badge.svg)](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-linux_i686.yml) <br>
-[![Build for linux_x86_64](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-linux_x86_64.yml/badge.svg)](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-linux_x86_64.yml) <br>
 [![Build for macosx_10_9_x86_64](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-macosx_10_9_x86_64.yml/badge.svg)](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-macosx_10_9_x86_64.yml) <br>
 [![Build for macosx_11_0_arm64](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-macosx_11_0_arm64.yml/badge.svg)](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-macosx_11_0_arm64.yml) <br>
+[![Build for manylinux2010_i686](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-manylinux2010_i686.yml/badge.svg)](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-manylinux2010_i686.yml) <br>
+[![Build for manylinux2010_x86_64](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-manylinux2010_x86_64.yml/badge.svg)](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-manylinux2010_x86_64.yml) <br>
+[![Build for manylinux2014_aarch64](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-manylinux2014_aarch64.yml/badge.svg)](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-manylinux2014_aarch64.yml) <br>
+[![Build for manylinux2014_armv7l](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-manylinux2014_armv7l.yml/badge.svg)](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-manylinux2014_armv7l.yml) <br>
+[![Build for musllinux2010_i686](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-musllinux2010_i686.yml/badge.svg)](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-musllinux2010_i686.yml) <br>
+[![Build for musllinux2010_x86_64](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-musllinux2010_x86_64.yml/badge.svg)](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-musllinux2010_x86_64.yml) <br>
+[![Build for musllinux2014_aarch64](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-musllinux2014_aarch64.yml/badge.svg)](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-musllinux2014_aarch64.yml) <br>
+[![Build for musllinux2014_armv7l](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-musllinux2014_armv7l.yml/badge.svg)](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-musllinux2014_armv7l.yml) <br>
 [![Build for win32](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-win32.yml/badge.svg)](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-win32.yml) <br>
 [![Build for win_amd64](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-win_amd64.yml/badge.svg)](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-win_amd64.yml) <br>
 [![Build for win_arm64](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-win_arm64.yml/badge.svg)](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-win_arm64.yml)
