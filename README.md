@@ -3,6 +3,7 @@ Minimal FFmpeg with h.264 for Xdcheckin.
 
 ## Build Status
 [![Build for linux_aarch64](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-linux_aarch64.yml/badge.svg)](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-linux_aarch64.yml) <br>
+[![Build for linux_armv7l](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-linux_armv7l.yml/badge.svg)](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-linux_armv7l.yml) <br>
 [![Build for linux_i686](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-linux_i686.yml/badge.svg)](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-linux_i686.yml) <br>
 [![Build for linux_x86_64](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-linux_x86_64.yml/badge.svg)](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-linux_x86_64.yml) <br>
 [![Build for macosx_12_7_x86_64](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-macosx_12_7_x86_64.yml/badge.svg)](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-macosx_12_7_x86_64.yml) <br>
