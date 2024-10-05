@@ -60,10 +60,17 @@ PLATFORM=${PLATFORM:-"unknown"}
     ;;
 esac
 
-export MACOSX_DEPLOYMENT_TARGET="10.9"
-
 echo "$ARCH" | grep -qE 'x86|i386|i686' && is_x86=1 || is_x86=0
+echo "$ARCH" | grep -qE 'arm64|aarch64' && is_aarch64=1 || is_aarch64=0
 [ $is_x86 -ne 1 ] && echo "Not using yasm or nasm on non-x86 PLATFORM..."
+
+if [ "$PLATFORM" = "darwin" ]; then
+  if [ $is_x86 -eq 1 ]; then
+    export MACOSX_DEPLOYMENT_TARGET="10.9"
+  elif [ $is_aarch64 -eq 1 ]; then
+    export MACOSX_DEPLOYMENT_TARGET="11.0"
+  fi
+fi
 
 # CROSS_COMPILE="aarch64-linux-gnu"
 CROSS_COMPILE=${CROSS_COMPILE:-""}
