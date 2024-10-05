@@ -5,22 +5,6 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-linux_aarch64:
-    name: Build for linux_aarch64
-    uses: ./.github/workflows/build-linux_aarch64.yml
-
-  build-linux_armv7l:
-    name: Build for linux_armv7l
-    uses: ./.github/workflows/build-linux_armv7l.yml
-
-  build-linux_i686:
-    name: Build for linux_i686
-    uses: ./.github/workflows/build-linux_i686.yml
-
-  build-linux_x86_64:
-    name: Build for linux_x86_64
-    uses: ./.github/workflows/build-linux_x86_64.yml
-
   build-macosx_10_9_x86_64:
     name: Build for macosx_10_9_x86_64
     uses: ./.github/workflows/build-macosx_10_9_x86_64.yml
@@ -28,6 +12,38 @@ jobs:
   build-macosx_11_0_arm64:
     name: Build for macosx_11_0_arm64
     uses: ./.github/workflows/build-macosx_11_0_arm64.yml
+
+  build-manylinux2010_i686:
+    name: Build for manylinux2010_i686
+    uses: ./.github/workflows/build-manylinux2010_i686.yml
+
+  build-manylinux2010_x86_64:
+    name: Build for manylinux2010_x86_64
+    uses: ./.github/workflows/build-manylinux2010_x86_64.yml
+
+  build-manylinux2014_aarch64:
+    name: Build for manylinux2014_aarch64
+    uses: ./.github/workflows/build-manylinux2014_aarch64.yml
+
+  build-manylinux2014_armv7l:
+    name: Build for manylinux2014_armv7l
+    uses: ./.github/workflows/build-manylinux2014_armv7l.yml
+
+  build-musllinux2010_i686:
+    name: Build for musllinux2010_i686
+    uses: ./.github/workflows/build-musllinux2010_i686.yml
+
+  build-musllinux2010_x86_64:
+    name: Build for musllinux2010_x86_64
+    uses: ./.github/workflows/build-musllinux2010_x86_64.yml
+
+  build-musllinux2014_aarch64:
+    name: Build for musllinux2014_aarch64
+    uses: ./.github/workflows/build-musllinux2014_aarch64.yml
+
+  build-musllinux2014_armv7l:
+    name: Build for musllinux2014_armv7l
+    uses: ./.github/workflows/build-musllinux2014_armv7l.yml
 
   build-win32:
     name: Build for win32

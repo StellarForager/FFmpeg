@@ -1,0 +1,21 @@
+name: Build for musllinux2010_x86_64
+
+on:
+  workflow_call:
+  workflow_dispatch:
+
+jobs:
+  build-musllinux2010_x86_64:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4.1.1
+
+      - name: Build FFmpeg and wheel
+        uses: ./.github/actions/build-wheel
+        with:
+          WHL_PLATFORM: "musllinux2010_x86_64"
+          ARCH: ""
+          CROSS_COMPILE: ""
+          PLATFORM: ""
