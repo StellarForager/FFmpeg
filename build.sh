@@ -60,6 +60,8 @@ PLATFORM=${PLATFORM:-"unknown"}
     ;;
 esac
 
+MACOSX_DEPLOYMENT_TARGET="10.9"
+
 echo "$ARCH" | grep -qE 'x86|i386|i686' && is_x86=1 || is_x86=0
 [ $is_x86 -ne 1 ] && echo "Not using yasm or nasm on non-x86 PLATFORM..."
 
