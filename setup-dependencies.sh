@@ -9,7 +9,8 @@ elif grep -qE 'debian|ubuntu' /etc/os-release; then
   sudo apt-get \
     --allow-remove-essential -y install \
     autoconf automake build-essential curl gawk libtool pkg-config tar
-  if [ "$CROSS_COMPILE_PKG_SUFFIX" = "mingw-w64-aarch64" ] && [ $is_x86 -eq 1 ]; then    wget https://github.com/mstorsjo/llvm-mingw/releases/download/20241001/llvm-mingw-20241001-msvcrt-ubuntu-20.04-x86_64.tar.xz
+  if [ "$CROSS_COMPILE_PKG_SUFFIX" = "mingw-w64-aarch64" ] && [ $is_x86 -eq 1 ]; then
+    wget https://github.com/mstorsjo/llvm-mingw/releases/download/20241001/llvm-mingw-20241001-msvcrt-ubuntu-20.04-x86_64.tar.xz
     tar -xf llvm-mingw-*.tar.xz
     export PATH="$(realpath "llvm-mingw-*/"):$PATH"
   elif [ -n "$CROSS_COMPILE_PKG_SUFFIX" ]; then
