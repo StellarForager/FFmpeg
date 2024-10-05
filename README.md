@@ -15,7 +15,7 @@ Minimal FFmpeg with h.264 for Xdcheckin.
 ## Usage
 Install:
 ```sh
-pip install xdcheckin-ffmpeg
+pip install Xdcheckin-FFmpeg
 ```
 
 Import, get FFmpeg executable path and its version:
