@@ -16,7 +16,7 @@ jobs:
         uses: ./.github/actions/build-wheel
         with:
           WHL_PLATFORM: "linux_armv7l"
-          ARCH: "aarch64"
+          ARCH: "armhf"
           CROSS_COMPILE: "arm-linux-gnueabihf"
           CROSS_COMPILE_PKG_SUFFIX: "arm-linux-gnueabihf"
           PLATFORM: "linux"
