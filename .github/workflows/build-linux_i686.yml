@@ -1,11 +1,11 @@
-name: Build for manylinux2010_i686
+name: Build for linux_i686
 
 on:
   workflow_call:
   workflow_dispatch:
 
 jobs:
-  build-manylinux2010_i686:
+  build-linux_i686:
     name: Build
     runs-on: ubuntu-latest
     steps:
@@ -15,7 +15,7 @@ jobs:
       - name: Build FFmpeg and wheel
         uses: ./.github/actions/build-wheel
         with:
-          WHL_PLATFORM: "manylinux2010_i686"
+          WHL_PLATFORM: "linux_i686"
           ARCH: "i686"
           CROSS_COMPILE: "i686-linux-gnu"
           CROSS_COMPILE_PKG_SUFFIX: "i686-linux-gnu"
