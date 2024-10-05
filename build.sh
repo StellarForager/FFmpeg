@@ -152,15 +152,18 @@ if [ $is_x86 -eq 1 ]; then
     'darwin')
       echo "*** Building yasm ***"
       cd $BUILD_DIR/yasm*
+      [ $rebuild -eq 1 -a -f Makefile ] && make distclean || true
+      [ ! -f config.status ] && \
+      ./configure --prefix=$TARGET_DIR --bindir=$BIN_DIR --disable-nls
       ;;
     'linux'|'mingw32')
       echo "*** Building nasm ***"
       cd $BUILD_DIR/nasm*
+      [ $rebuild -eq 1 -a -f Makefile ] && make distclean || true
+      [ ! -f config.status ] && \
+      ./configure --prefix=$TARGET_DIR --bindir=$BIN_DIR
       ;;
   esac
-  [ $rebuild -eq 1 -a -f Makefile ] && make distclean || true
-  [ ! -f config.status ] && \
-  ./configure --prefix=$TARGET_DIR --bindir=$BIN_DIR
   make -j $jval
   make install
 fi
