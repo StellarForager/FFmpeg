@@ -4,7 +4,7 @@ Changelog for Xdcheckin-FFmpeg.
 
 ## [Unreleased]
 
-## [1.0.3] - 2024-10-06
+## [1.0.3] - 2024-10-05
 
 ### Fixed
 
