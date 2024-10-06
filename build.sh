@@ -240,7 +240,6 @@ cd $BUILD_DIR/ffmpeg*
   --disable-doc \
   --disable-everything \
   --disable-autodetect \
-  $([ "$PLATFORM" = "darwin" ] && echo "--disable-videotoolbox") \
   $([ "$PLATFORM" = "mingw32" ] && echo "--disable-w32threads") \
   --enable-pic \
   --enable-static \
