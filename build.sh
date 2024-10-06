@@ -236,12 +236,12 @@ cd $BUILD_DIR/ffmpeg*
   --extra-libs="$([ "$PLATFORM" = "linux" ] && echo "-lpthread -lm")" \
   --extra-ldexeflags="$([ "$PLATFORM" = "linux" ] && echo "-static")$([ "$PLATFORM" = "darwin" ] && echo "-Bstatic")" \
   --bindir="$BIN_DIR" \
-  --disable-everything \
-  --disable-autodetect \
   --disable-manpages \
   --disable-doc \
-  $([ "$PLATFORM" = "mingw32" ] && echo " --disable-w32threads") \
-  $([ "$PLATFORM" = "mingw32" ] && echo " --disable-autodetect") \
+  --disable-everything \
+  --disable-autodetect \
+  $([ "$PLATFORM" = "darwin" ] && echo "--disable-videotoolbox") \
+  $([ "$PLATFORM" = "mingw32" ] && echo "--disable-w32threads") \
   --enable-pic \
   --enable-static \
   --enable-gpl \
