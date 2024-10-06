@@ -74,9 +74,6 @@ runs:
       run: |
         ARCH=${{ env.ARCH }} CROSS_COMPILE=${{ env.CROSS_COMPILE }} PLATFORM=${{ env.PLATFORM }} sh build.sh
         find build/ffmpeg*/ -type f \( -name "ffmpeg" -o -name "ffmpeg.exe" \) -exec cp {} src/xdcheckin_ffmpeg/bin/ \;
-        if [ -z ${{ env.CROSS_COMPILE }} ]; then
-          ldd src/xdcheckin_ffmpeg/bin/ffmpeg*
-        fi
 
     - name: Build package
       shell: bash
