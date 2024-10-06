@@ -4,6 +4,12 @@ Changelog for Xdcheckin-FFmpeg.
 
 ## [Unreleased]
 
+## [1.0.4] - 2024-10-06
+
+### Fixed
+
+- Fix platform tags.
+
 ## [1.0.3] - 2024-10-05
 
 ### Fixed
@@ -28,7 +34,8 @@ Changelog for Xdcheckin-FFmpeg.
 
 - Initial release.
 
-[unreleased]: https://github.com/Pairman/Xdcheckin/compare/1.0.3...main
+[unreleased]: https://github.com/Pairman/Xdcheckin/compare/1.0.4...main
+[1.0.4]: https://github.com/Pairman/Xdcheckin/compare/1.0.3...1.0.4
 [1.0.3]: https://github.com/Pairman/Xdcheckin/compare/1.0.2...1.0.3
 [1.0.2]: https://github.com/Pairman/Xdcheckin/compare/1.0.1...1.0.2
 [1.0.1]: https://github.com/Pairman/Xdcheckin/compare/1.0.0...1.0.1

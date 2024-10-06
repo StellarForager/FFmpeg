@@ -29,21 +29,21 @@ jobs:
     name: Build for manylinux2014_armv7l
     uses: ./.github/workflows/build-manylinux2014_armv7l.yml
 
-  build-musllinux2010_i686:
-    name: Build for musllinux2010_i686
-    uses: ./.github/workflows/build-musllinux2010_i686.yml
+  build-musllinux_1_0_i686:
+    name: Build for musllinux_1_0_i686
+    uses: ./.github/workflows/build-musllinux_1_0_i686.yml
 
-  build-musllinux2010_x86_64:
-    name: Build for musllinux2010_x86_64
-    uses: ./.github/workflows/build-musllinux2010_x86_64.yml
+  build-musllinux_1_0_x86_64:
+    name: Build for musllinux_1_0_x86_64
+    uses: ./.github/workflows/build-musllinux_1_0_x86_64.yml
 
-  build-musllinux2014_aarch64:
-    name: Build for musllinux2014_aarch64
-    uses: ./.github/workflows/build-musllinux2014_aarch64.yml
+  build-musllinux_1_0_aarch64:
+    name: Build for musllinux_1_0_aarch64
+    uses: ./.github/workflows/build-musllinux_1_0_aarch64.yml
 
-  build-musllinux2014_armv7l:
-    name: Build for musllinux2014_armv7l
-    uses: ./.github/workflows/build-musllinux2014_armv7l.yml
+  build-musllinux_1_0_armv7l:
+    name: Build for musllinux_1_0_armv7l
+    uses: ./.github/workflows/build-musllinux_1_0_armv7l.yml
 
   build-win32:
     name: Build for win32

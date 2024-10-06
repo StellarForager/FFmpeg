@@ -237,11 +237,11 @@ cd $BUILD_DIR/ffmpeg*
   --extra-ldexeflags="$([ "$PLATFORM" = "linux" ] && echo "-static")$([ "$PLATFORM" = "darwin" ] && echo "-Bstatic")" \
   --bindir="$BIN_DIR" \
   --disable-everything \
+  --disable-autodetect \
   --disable-manpages \
   --disable-doc \
   $([ "$PLATFORM" = "mingw32" ] && echo " --disable-w32threads") \
   $([ "$PLATFORM" = "mingw32" ] && echo " --disable-autodetect") \
-  --disable-xlib \
   --enable-pic \
   --enable-static \
   --enable-gpl \

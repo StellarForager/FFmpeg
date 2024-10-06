@@ -1,11 +1,11 @@
-name: Build for musllinux2014_aarch64
+name: Build for musllinux_1_0_armv7l
 
 on:
   workflow_call:
   workflow_dispatch:
 
 jobs:
-  build-musllinux2014_aarch64:
+  build-musllinux_1_0_armv7l:
     name: Build
     runs-on: ubuntu-latest
     steps:
@@ -15,8 +15,8 @@ jobs:
       - name: Build FFmpeg and wheel
         uses: ./.github/actions/build-wheel
         with:
-          WHL_PLATFORM: "musllinux2014_aarch64"
-          ARCH: "aarch64"
-          CROSS_COMPILE: "aarch64-linux-gnu"
-          CROSS_COMPILE_PKG_SUFFIX: "aarch64-linux-gnu"
+          WHL_PLATFORM: "musllinux_1_0_armv7l"
+          ARCH: "armhf"
+          CROSS_COMPILE: "arm-linux-gnueabihf"
+          CROSS_COMPILE_PKG_SUFFIX: "arm-linux-gnueabihf"
           PLATFORM: "linux"
