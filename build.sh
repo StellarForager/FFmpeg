@@ -255,8 +255,7 @@ cd $BUILD_DIR/ffmpeg*
   --enable-muxer=image2 \
   --enable-protocol=pipe \
   --enable-protocol=tcp \
-  --enable-protocol=http \
-  --enable-protocol=rtmp
+  --enable-protocol=http
 #   --enable-openssl \
 #   --enable-libfdk-aac \
 #   --enable-decoder=aac \
@@ -265,6 +264,7 @@ cd $BUILD_DIR/ffmpeg*
 #   --enable-protocol=file \
 #   --enable-protocol=udp \
 #   --enable-protocol=https \
+#   --enable-protocol=rtmp \
 #   --enable-protocol=rtmps
 PATH="$BIN_DIR:$PATH" make -j $jval
 
