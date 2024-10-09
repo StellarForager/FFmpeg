@@ -255,8 +255,8 @@ cd $BUILD_DIR/ffmpeg*
   --enable-muxer=image2 \
   --enable-protocol=pipe \
   --enable-protocol=tcp \
-  --enable-protocol=http
-  --enable-protocol=rtmp \
+  --enable-protocol=http \
+  --enable-protocol=rtmp
 #   --enable-openssl \
 #   --enable-libfdk-aac \
 #   --enable-decoder=aac \
