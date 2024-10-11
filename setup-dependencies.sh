@@ -18,4 +18,9 @@ elif grep -qE 'debian|ubuntu' /etc/os-release; then
       --allow-remove-essential --allow-change-held-packages -y \
       "gcc-$CROSS_COMPILE_PKG_SUFFIX" "g++-$CROSS_COMPILE_PKG_SUFFIX"
   fi
+elif grep -qE 'fedora' /etc/os-release; then
+  sudo dnf -y groupinstall "Development Tools"
+  sudo dnf -y install \
+    autoconf automake curl gawk glibc-devel glibc-static \
+    libtool pkgconf-pkg-config tar
 fi
