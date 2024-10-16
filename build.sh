@@ -132,11 +132,11 @@ fi
 #   "nil" \
 #   "https://github.com/openssl/openssl/archive/"
 
-download \
-  "x264-stable.tar.gz" \
-  "" \
-  "nil" \
-  "https://code.videolan.org/videolan/x264/-/archive/stable/"
+# download \
+#   "x264-stable.tar.gz" \
+#   "" \
+#   "nil" \
+#   "https://code.videolan.org/videolan/x264/-/archive/stable/"
 
 # download \
 #   "fdk-aac-free-$VER_FDKAAC.tar.gz" \
@@ -190,17 +190,17 @@ fi
 # PATH="$BIN_DIR:$PATH" CFLAGS="-Os -fPIC" CXXFLAGS="-Os -fPIC" LDFLAGS="-Wl,-s" make -j $jval
 # make install_sw
 
-echo "*** Building x264 ***"
-cd $BUILD_DIR/x264*
-[ $rebuild -eq 1 -a -f Makefile ] && make distclean || true
-[ ! -f config.status ] && \
-  PATH="$BIN_DIR:$PATH" CFLAGS="-Os" CXXFLAGS="-Os" LDFLAGS="-Wl,-s" ./configure \
-  $([ -n "$CROSS_COMPILE" ] && echo "--host=${CROSS_COMPILE}") \
-  $([ -n "$CROSS_COMPILE" ] && echo "--cross-prefix=${CROSS_COMPILE}-") \
-  --prefix=$TARGET_DIR --enable-static --enable-strip --enable-pic --disable-opencl \
-  $([ "$PLATFORM" = "mingw32" ] && echo " --disable-win32thread")
-PATH="$BIN_DIR:$PATH" make -j $jval
-make install
+# echo "*** Building x264 ***"
+# cd $BUILD_DIR/x264*
+# [ $rebuild -eq 1 -a -f Makefile ] && make distclean || true
+# [ ! -f config.status ] && \
+#   PATH="$BIN_DIR:$PATH" CFLAGS="-Os" CXXFLAGS="-Os" LDFLAGS="-Wl,-s" ./configure \
+#   $([ -n "$CROSS_COMPILE" ] && echo "--host=${CROSS_COMPILE}") \
+#   $([ -n "$CROSS_COMPILE" ] && echo "--cross-prefix=${CROSS_COMPILE}-") \
+#   --prefix=$TARGET_DIR --enable-static --enable-strip --enable-pic --disable-opencl \
+#   $([ "$PLATFORM" = "mingw32" ] && echo " --disable-win32thread")
+# PATH="$BIN_DIR:$PATH" make -j $jval
+# make install
 
 # echo "*** Building fdk-aac-free ***"
 # cd $BUILD_DIR/fdk-aac*
@@ -245,7 +245,6 @@ cd $BUILD_DIR/ffmpeg*
   --enable-static \
   --enable-gpl \
   --enable-version3 \
-  --enable-libx264 \
   --enable-demuxer=hls \
   --enable-demuxer=rtsp \
   --enable-demuxer=h264 \
@@ -257,6 +256,7 @@ cd $BUILD_DIR/ffmpeg*
   --enable-protocol=tcp \
   --enable-protocol=http
 #   --enable-openssl \
+  # --enable-libx264 \
 #   --enable-libfdk-aac \
 #   --enable-decoder=aac \
 #   --enable-parser=aac \
