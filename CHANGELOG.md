@@ -4,6 +4,8 @@ Changelog for Xdcheckin-FFmpeg.
 
 ## [Unreleased]
 
+## [1.0.5] - 2024-10-17
+
 ### Changed
 
 - Disable unused libx264.
@@ -38,7 +40,8 @@ Changelog for Xdcheckin-FFmpeg.
 
 - Initial release.
 
-[unreleased]: https://github.com/Pairman/Xdcheckin/compare/1.0.4...main
+[unreleased]: https://github.com/Pairman/Xdcheckin/compare/1.0.5...main
+[1.0.5]: https://github.com/Pairman/Xdcheckin/compare/1.0.4...1.0.5
 [1.0.4]: https://github.com/Pairman/Xdcheckin/compare/1.0.3...1.0.4
 [1.0.3]: https://github.com/Pairman/Xdcheckin/compare/1.0.2...1.0.3
 [1.0.2]: https://github.com/Pairman/Xdcheckin/compare/1.0.1...1.0.2
