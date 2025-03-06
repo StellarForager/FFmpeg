@@ -63,10 +63,12 @@ def ffmpeg():
 
 	:return: Path string.
 	"""
+	bin = _get_bin_dir()
+	for b in ("ffmpeg", "ffmpeg.exe"):
+		exe = _os.path.join(bin, b)
+		if exe and _os.path.isfile(exe) and _is_valid_exe(exe):
+			return exe
 	plat = _get_platform()
-	exe = _os.path.join(_get_bin_dir(), "ffmpeg")
-	if exe and _os.path.isfile(exe) and _is_valid_exe(exe):
-		return exe
 	if plat.startswith("win"):
 		exe = _os.path.join(_sys.prefix, "Library", "bin", "ffmpeg.exe")
 	else:
@@ -85,6 +87,8 @@ def ffmpeg_version():
 	:return: Version string.
 	"""
 	exe = ffmpeg()
+	if not exe:
+		return None
 	line = _subprocess.check_output(
 		[exe, "-version"], **_popen_kwargs()
 	).split(b"\n", 1)[0]
