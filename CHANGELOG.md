@@ -4,6 +4,18 @@ Changelog for Xdcheckin-FFmpeg.
 
 ## [Unreleased]
 
+##  [1.0.9] - 2025-05-02
+
+### Changed
+
+- Update llvm-mingw.
+
+## [1.0.8] - 2025-04-18
+
+### Changed
+
+- Update llvm-mingw.
+
 ## [1.0.6] - 2025-03-06
 
 ### Fixed
@@ -46,7 +58,9 @@ Changelog for Xdcheckin-FFmpeg.
 
 - Initial release.
 
-[unreleased]: https://github.com/Pairman/Xdcheckin/compare/1.0.6...main
+[unreleased]: https://github.com/Pairman/Xdcheckin/compare/1.0.9...main
+[1.0.9]: https://github.com/Pairman/Xdcheckin/compare/1.0.8...1.0.9
+[1.0.8]: https://github.com/Pairman/Xdcheckin/compare/1.0.6...1.0.8
 [1.0.6]: https://github.com/Pairman/Xdcheckin/compare/1.0.5...1.0.6
 [1.0.5]: https://github.com/Pairman/Xdcheckin/compare/1.0.4...1.0.5
 [1.0.4]: https://github.com/Pairman/Xdcheckin/compare/1.0.3...1.0.4
