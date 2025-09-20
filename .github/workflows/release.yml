@@ -1,11 +1,6 @@
 name: Build and Release
 
 on:
-  push:
-    branches:
-      - master
-    paths:
-      - pyproject.toml
   workflow_dispatch:
 
 concurrency: 
