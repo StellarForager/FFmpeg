@@ -72,4 +72,4 @@ runs:
         if-no-files-found: error
         name: ${{ env.UPLOAD_NAME }}
         path: |
-          dist/*
+          dist/ffmpeg*
