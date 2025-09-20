@@ -29,10 +29,10 @@ jobs:
       - name: Compress binaries
         run: |
           UPX_VERSION="5.0.1"
-          wget -q https://github.com/upx/upx/releases/download/v$UPX_VERSION/upx-$UPX_VERSION-amd64_linux.tar.xz -O dl/upx.tar.xz
-          tar -xf dl/upx.tar.xz -C bin/
+          wget -q https://github.com/upx/upx/releases/download/v$UPX_VERSION/upx-$UPX_VERSION-amd64_linux.tar.xz -O upx.tar.xz
+          tar -xf upx.tar.xz
           for FNAME in dist/*; do
-            bin/upx-*/upx -q --best --ultra-brute "$FNAME" 1>/dev/null &
+            upx-*/upx -q --best --ultra-brute "$FNAME" 1>/dev/null &
           done
           wait
 

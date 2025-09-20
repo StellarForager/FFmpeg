@@ -5,3 +5,4 @@ target/
 bin/
 dl/
 */__pycache__/
+upx*
