@@ -37,9 +37,16 @@ jobs:
           done
           wait
 
+      - name: Create tag
+        id: create_tag
+        run: |
+          echo GH_RELEASE_TAG="v$(date +%Y%m%d%H%M%S)" >> $GITHUB_ENV
+
       - name: Release to GitHub
         uses: softprops/action-gh-release@v2.0.2
         with:
+          tag_name: ${{ env.GH_RELEASE_TAG }}
+          name: ${{ env.GH_RELEASE_TAG }}
           token: ${{ secrets.GH_TOKEN_RELEASES }}
           files: |
             dist/*
