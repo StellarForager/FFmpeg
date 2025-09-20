@@ -53,16 +53,6 @@ runs:
           echo `realpath llvm-mingw-*/bin/` >> $GITHUB_PATH
         fi
 
-    - name: List environment variables
-      shell: bash
-      run: |
-        echo "OS_NAME=${{ env.OS_NAME }}"
-        echo "ARCH=${{ env.ARCH }}"
-        echo "CROSS_COMPILE=${{ env.CROSS_COMPILE }}"
-        echo "CROSS_COMPILE_PKG_SUFFIX=${{ env.CROSS_COMPILE_PKG_SUFFIX }}"
-        echo "PLATFORM=${{ env.PLATFORM }}"
-        echo "PATH=$PATH"
-
     - name: Build FFmpeg
       shell: bash
       run: |
@@ -76,16 +66,6 @@ runs:
         echo "DIST:"
         ls dist/
         echo "UPLOAD_NAME=dist-${{ env.OS_NAME }}_${{ env.ARCH }}" >> $GITHUB_ENV
-
-    - name: List environment variables
-      shell: bash
-      run: |
-        echo "OS_NAME=${{ env.OS_NAME }}"
-        echo "ARCH=${{ env.ARCH }}"
-        echo "CROSS_COMPILE=${{ env.CROSS_COMPILE }}"
-        echo "CROSS_COMPILE_PKG_SUFFIX=${{ env.CROSS_COMPILE_PKG_SUFFIX }}"
-        echo "PLATFORM=${{ env.PLATFORM }}"
-        echo "PATH=$PATH"
 
     - name: Upload package
       uses: actions/upload-artifact@v4.3.1
