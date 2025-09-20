@@ -13,15 +13,9 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  check-version:
-    name: Check for version increment
-    uses: ./.github/workflows/check-version.yml
-
   build:
     name: Build packages
     uses: ./.github/workflows/build.yml
-    needs: check-version
-    if: ${{ needs.check-version.outputs.version_change == 'true' }}
 
   release:
     name: Release to GitHub
@@ -48,7 +42,6 @@ jobs:
           wait
 
       - name: Release to GitHub
-        if: ${{ steps.check-version.outputs.version_change == 'true' }}
         uses: softprops/action-gh-release@v2.0.2
         with:
           token: ${{ secrets.GH_TOKEN_RELEASES }}
