@@ -12,10 +12,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4.1.1
 
-      - name: Build FFmpeg and wheel
-        uses: ./.github/actions/build-wheel
+      - name: Build FFmpeg
+        uses: ./.github/actions/build
         with:
-          OS: "linux"
+          OS_NAME: "linux"
           ARCH: "armhf"
           CROSS_COMPILE: "arm-linux-gnueabihf"
           CROSS_COMPILE_PKG_SUFFIX: "arm-linux-gnueabihf"

@@ -12,8 +12,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4.1.1
 
-      - name: Build FFmpeg and wheel
-        uses: ./.github/actions/build-wheel
+      - name: Build FFmpeg
+        uses: ./.github/actions/build
         with:
-          OS: "darwin"
+          OS_NAME: "darwin"
           ARCH: "x86_64"

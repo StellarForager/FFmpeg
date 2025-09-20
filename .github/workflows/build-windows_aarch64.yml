@@ -12,10 +12,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4.1.1
 
-      - name: Build FFmpeg and wheel
-        uses: ./.github/actions/build-wheel
+      - name: Build FFmpeg
+        uses: ./.github/actions/build
         with:
-          OS: "windows"
+          OS_NAME: "windows"
           ARCH: "aarch64"
           CROSS_COMPILE: "aarch64-w64-mingw32"
           CROSS_COMPILE_PKG_SUFFIX: "mingw-w64-aarch64"
