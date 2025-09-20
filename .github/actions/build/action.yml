@@ -39,6 +39,7 @@ runs:
     - name: Setup environment variables
       shell: bash
       run: |
+        echo "OS_NAME=${{ inputs.OS_NAME }}" >> $GITHUB_ENV
         echo "ARCH=${{ inputs.ARCH }}" >> $GITHUB_ENV
         echo "CROSS_COMPILE=${{ inputs.CROSS_COMPILE }}" >> $GITHUB_ENV
         echo "CROSS_COMPILE_PKG_SUFFIX=${{ inputs.CROSS_COMPILE_PKG_SUFFIX }}" >> $GITHUB_ENV
