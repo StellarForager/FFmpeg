@@ -1,10 +1,10 @@
 name: Build Wheel Action
 description: Action for building FFmpeg and package wheel.
 inputs:
-  WHL_PLATFORM:
-    description: "Wheel platform"
+  OS:
+    description: "OS name"
     required: false
-    default: "manylinux2010_x86_64"
+    default: "linux"
     type: string
   ARCH:
     description: "Architecture"
@@ -35,16 +35,10 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Set up Python
-      uses: actions/setup-python@v5.0.0
-      with:
-        python-version: "3.10"
-        cache: pip
 
     - name: Setup environment variables
       shell: bash
       run: |
-        echo "WHL_PLATFORM=${{ inputs.WHL_PLATFORM }}" >> $GITHUB_ENV
         echo "ARCH=${{ inputs.ARCH }}" >> $GITHUB_ENV
         echo "CROSS_COMPILE=${{ inputs.CROSS_COMPILE }}" >> $GITHUB_ENV
         echo "CROSS_COMPILE_PKG_SUFFIX=${{ inputs.CROSS_COMPILE_PKG_SUFFIX }}" >> $GITHUB_ENV
@@ -57,29 +51,15 @@ runs:
         if [ "$CROSS_COMPILE_PKG_SUFFIX" = "mingw-w64-aarch64" ]; then
           echo `realpath llvm-mingw-*/bin/` >> $GITHUB_PATH
         fi
-        pip install build
-
-    - name: List environment variables
-      shell: bash
-      run: |
-        echo "WHL_PLATFORM=${{ env.WHL_PLATFORM }}"
-        echo "ARCH=${{ env.ARCH }}"
-        echo "CROSS_COMPILE=${{ env.CROSS_COMPILE }}"
-        echo "CROSS_COMPILE_PKG_SUFFIX=${{ env.CROSS_COMPILE_PKG_SUFFIX }}"
-        echo "PLATFORM=${{ env.PLATFORM }}"
-        echo "PATH=$PATH"
 
     - name: Build FFmpeg
       shell: bash
       run: |
         ARCH=${{ env.ARCH }} CROSS_COMPILE=${{ env.CROSS_COMPILE }} PLATFORM=${{ env.PLATFORM }} sh build.sh
-        find build/ffmpeg*/ -type f \( -name "ffmpeg" -o -name "ffmpeg.exe" \) -exec cp {} src/xdcheckin_ffmpeg/bin/ \;
-
-    - name: Build package
-      shell: bash
-      run: |
-        python -m build -w -C="--build-option=--plat-name" -C="--build-option=${{ env.WHL_PLATFORM }}"
-        echo "UPLOAD_NAME=dist-${{ env.WHL_PLATFORM }}" >> $GITHUB_ENV
+        mkdir -pv dist/
+        EXT=""
+        [ "${{ env.OS }}" = "windows" ] && EXT=".exe"
+        cp build/ffmpeg*/ffmpeg$EXT dist/ffmpeg_${{ env.OS }}_${{ env.ARCH }}$EXT
 
     - name: Upload package
       uses: actions/upload-artifact@v4.3.1
@@ -88,4 +68,4 @@ runs:
         if-no-files-found: error
         name: ${{ env.UPLOAD_NAME }}
         path: |
-          dist/*.whl
+          dist/*

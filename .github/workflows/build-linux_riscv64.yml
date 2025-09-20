@@ -1,11 +1,11 @@
-name: Build for win32
+name: Build for linux_riscv64
 
 on:
   workflow_call:
   workflow_dispatch:
 
 jobs:
-  build-win32:
+  build-linux_riscv64:
     name: Build
     runs-on: ubuntu-latest
     steps:
@@ -15,8 +15,8 @@ jobs:
       - name: Build FFmpeg and wheel
         uses: ./.github/actions/build-wheel
         with:
-          WHL_PLATFORM: "win32"
-          ARCH: "i686"
-          CROSS_COMPILE: "i686-w64-mingw32"
-          CROSS_COMPILE_PKG_SUFFIX: "mingw-w64-i686"
-          PLATFORM: "mingw32"
+          OS: "linux"
+          ARCH: "riscv64"
+          CROSS_COMPILE: "riscv64-linux-gnu"
+          CROSS_COMPILE_PKG_SUFFIX: "riscv64-linux-gnu"
+          PLATFORM: "linux"

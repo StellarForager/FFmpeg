@@ -1,11 +1,11 @@
-name: Build for macosx_11_0_arm64
+name: Build for darwin_aarch64
 
 on:
   workflow_call:
   workflow_dispatch:
 
 jobs:
-  build-macosx_11_0_arm64:
+  build-darwin_aarch64:
     name: Build
     runs-on: macos-14
     steps:
@@ -15,4 +15,5 @@ jobs:
       - name: Build FFmpeg and wheel
         uses: ./.github/actions/build-wheel
         with:
-          WHL_PLATFORM: "macosx_11_0_arm64"
+          OS: "darwin"
+          ARCH: "aarch64"

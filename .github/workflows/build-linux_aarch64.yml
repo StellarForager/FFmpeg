@@ -1,11 +1,11 @@
-name: Build for manylinux2010_x86_64
+name: Build for linux_aarch64
 
 on:
   workflow_call:
   workflow_dispatch:
 
 jobs:
-  build-manylinux2010_x86_64:
+  build-linux_aarch64:
     name: Build
     runs-on: ubuntu-latest
     steps:
@@ -15,7 +15,8 @@ jobs:
       - name: Build FFmpeg and wheel
         uses: ./.github/actions/build-wheel
         with:
-          WHL_PLATFORM: "manylinux2010_x86_64"
-          ARCH: ""
-          CROSS_COMPILE: ""
-          PLATFORM: ""
+          OS: "linux"
+          ARCH: "aarch64"
+          CROSS_COMPILE: "aarch64-linux-gnu"
+          CROSS_COMPILE_PKG_SUFFIX: "aarch64-linux-gnu"
+          PLATFORM: "linux"

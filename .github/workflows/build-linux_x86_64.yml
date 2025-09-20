@@ -1,11 +1,11 @@
-name: Build for manylinux2014_armv7l
+name: Build for linux_x86_64
 
 on:
   workflow_call:
   workflow_dispatch:
 
 jobs:
-  build-manylinux2014_armv7l:
+  build-linux_x86_64:
     name: Build
     runs-on: ubuntu-latest
     steps:
@@ -15,8 +15,7 @@ jobs:
       - name: Build FFmpeg and wheel
         uses: ./.github/actions/build-wheel
         with:
-          WHL_PLATFORM: "manylinux2014_armv7l"
-          ARCH: "armhf"
-          CROSS_COMPILE: "arm-linux-gnueabihf"
-          CROSS_COMPILE_PKG_SUFFIX: "arm-linux-gnueabihf"
-          PLATFORM: "linux"
+          OS: "linux"
+          ARCH: "x86_64"
+          CROSS_COMPILE: ""
+          PLATFORM: ""

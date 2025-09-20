@@ -1,13 +1,13 @@
-name: Build for macosx_10_9_x86_64
+name: Build for linux_i686
 
 on:
   workflow_call:
   workflow_dispatch:
 
 jobs:
-  build-macosx_10_9_x86_64:
+  build-linux_i686:
     name: Build
-    runs-on: macos-13
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4.1.1
@@ -15,4 +15,8 @@ jobs:
       - name: Build FFmpeg and wheel
         uses: ./.github/actions/build-wheel
         with:
-          WHL_PLATFORM: "macosx_10_9_x86_64"
+          OS: "linux"
+          ARCH: "i686"
+          CROSS_COMPILE: "i686-linux-gnu"
+          CROSS_COMPILE_PKG_SUFFIX: "i686-linux-gnu"
+          PLATFORM: "linux"

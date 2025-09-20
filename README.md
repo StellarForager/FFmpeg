@@ -1,33 +1,26 @@
-# Xdcheckin-FFmpeg
-Minimal FFmpeg with h.264 for Xdcheckin.
+# FFmpeg
+Minimal FFmpeg binaries with h.264 for Quasar.
 
 ## Build Status
-[![Build for macosx_10_9_x86_64](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-macosx_10_9_x86_64.yml/badge.svg)](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-macosx_10_9_x86_64.yml) <br>
-[![Build for macosx_11_0_arm64](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-macosx_11_0_arm64.yml/badge.svg)](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-macosx_11_0_arm64.yml) <br>
-[![Build for manylinux2010_i686](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-manylinux2010_i686.yml/badge.svg)](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-manylinux2010_i686.yml) <br>
-[![Build for manylinux2010_x86_64](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-manylinux2010_x86_64.yml/badge.svg)](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-manylinux2010_x86_64.yml) <br>
-[![Build for manylinux2014_aarch64](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-manylinux2014_aarch64.yml/badge.svg)](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-manylinux2014_aarch64.yml) <br>
-[![Build for manylinux2014_armv7l](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-manylinux2014_armv7l.yml/badge.svg)](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-manylinux2014_armv7l.yml) <br>
-[![Build for musllinux_1_0_i686](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-musllinux_1_0_i686.yml/badge.svg)](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-musllinux_1_0_i686.yml) <br>
-[![Build for musllinux_1_0_x86_64](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-musllinux_1_0_x86_64.yml/badge.svg)](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-musllinux_1_0_x86_64.yml) <br>
-[![Build for musllinux_1_0_aarch64](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-musllinux_1_0_aarch64.yml/badge.svg)](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-musllinux_1_0_aarch64.yml) <br>
-[![Build for musllinux_1_0_armv7l](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-musllinux_1_0_armv7l.yml/badge.svg)](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-musllinux_1_0_armv7l.yml) <br>
-[![Build for win32](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-win32.yml/badge.svg)](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-win32.yml) <br>
-[![Build for win_amd64](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-win_amd64.yml/badge.svg)](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-win_amd64.yml) <br>
-[![Build for win_arm64](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-win_arm64.yml/badge.svg)](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-win_arm64.yml)
+[![Build for darwin_aarch64](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-darwin_aarch64.yml/badge.svg)](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-darwin_aarch64.yml)
 
-## Usage
-Install:
-```sh
-pip install Xdcheckin-FFmpeg
-```
+[![Build for build-darwin_x86_64](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-darwin_x86_64.yml/badge.svg)](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-darwin_x86_64.yml)
 
-Import, get FFmpeg executable path and its version:
-```python
-import xdcheckin_ffmpeg
-print(xdcheckin_ffmpeg.bin.ffmpeg()) # or xdcheckin_ffmpeg.ffmpeg()
-print(xdcheckin_ffmpeg.bin.ffmpeg_version()) # or xdcheckin_ffmpeg.ffmpeg_version()
-```
+[![Build for build-linux_aarch64](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-linux_aarch64.yml/badge.svg)](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-linux_aarch64.yml)
+
+[![Build for build-linux_armv7l](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-linux_armv7l.yml/badge.svg)](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-linux_armv7l.yml)
+
+[![Build for linux_i686](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-linux_i686.yml/badge.svg)](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-linux_i686.yml)
+
+[![Build for linux_riscv64](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-linux_riscv64.yml/badge.svg)](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-linux_riscv64.yml)
+
+[![Build for linux_x86_64](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-linux_x86_64.yml/badge.svg)](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-linux_x86_64.yml)
+
+[![Build for windows_aarch64](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-windows_aarch64.yml/badge.svg)](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-windows_aarch64.yml)
+
+[![Build for windows_i686](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-windows_i686.yml/badge.svg)](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-windows_i686.yml)
+
+[![Build for windows_x86_64](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-windows_x86_64.yml/badge.svg)](https://github.com/Pairman/Xdcheckin-FFmpeg/actions/workflows/build-windows_x86_64.yml)
 
 ## Credits
 [zimbatm/ffmpeg-static](https://github.com/zimbatm/ffmpeg-static) <br>

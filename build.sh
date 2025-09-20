@@ -126,24 +126,6 @@ if [ $is_x86 -eq 1 ]; then
   esac
 fi
 
-# download \
-#   "openssl-$VER_OPENSSL.tar.gz" \
-#   "" \
-#   "nil" \
-#   "https://github.com/openssl/openssl/archive/"
-
-# download \
-#   "x264-stable.tar.gz" \
-#   "" \
-#   "nil" \
-#   "https://code.videolan.org/videolan/x264/-/archive/stable/"
-
-# download \
-#   "fdk-aac-free-$VER_FDKAAC.tar.gz" \
-#   "fdk-aac.tar.gz" \
-#   "nil" \
-#   "https://github.com/Pairman/Xdcheckin-FFmpeg/releases/download/0.0.0/"
-
 download \
   "ffmpeg-$VER_FFMPEG.tar.xz" \
   "" \
@@ -175,47 +157,8 @@ if [ $is_x86 -eq 1 ]; then
   make install
 fi
 
-# echo "*** Building OpenSSL ***"
-# cd $BUILD_DIR/openssl*
-# [ $rebuild -eq 1 -a -f Makefile ] && make distclean || true
-#   PATH="$BIN_DIR:$PATH" CFLAGS="-Os -fPIC" CXXFLAGS="-Os -fPIC" LDFLAGS="-Wl,-s" ./Configure \
-#   $([ "$PLATFORM" = "darwin" ] && echo "darwin64-$ARCH-cc") \
-#   $([ ! "$PLATFORM" = "darwin" ] && echo "$PLATFORM-$ARCH") \
-#   $([ -n "$CROSS_COMPILE" ] && echo "--cross-compile-prefix=$CROSS_COMPILE") \
-#   --prefix=$TARGET_DIR --libdir=lib \
-#   no-shared no-dso no-ssl3 no-psk no-tests \
-#   no-md2 no-md4 no-rc2 no-rc4 no-rc5 no-idea \
-#   no-whirlpool no-seed no-deprecated no-err \
-#   no-comp no-srp no-weak-ssl-ciphers
-# PATH="$BIN_DIR:$PATH" CFLAGS="-Os -fPIC" CXXFLAGS="-Os -fPIC" LDFLAGS="-Wl,-s" make -j $jval
-# make install_sw
-
-# echo "*** Building x264 ***"
-# cd $BUILD_DIR/x264*
-# [ $rebuild -eq 1 -a -f Makefile ] && make distclean || true
-# [ ! -f config.status ] && \
-#   PATH="$BIN_DIR:$PATH" CFLAGS="-Os" CXXFLAGS="-Os" LDFLAGS="-Wl,-s" ./configure \
-#   $([ -n "$CROSS_COMPILE" ] && echo "--host=${CROSS_COMPILE}") \
-#   $([ -n "$CROSS_COMPILE" ] && echo "--cross-prefix=${CROSS_COMPILE}-") \
-#   --prefix=$TARGET_DIR --enable-static --enable-strip --enable-pic --disable-opencl \
-#   $([ "$PLATFORM" = "mingw32" ] && echo " --disable-win32thread")
-# PATH="$BIN_DIR:$PATH" make -j $jval
-# make install
-
-# echo "*** Building fdk-aac-free ***"
-# cd $BUILD_DIR/fdk-aac*
-# [ $rebuild -eq 1 -a -f Makefile ] && make distclean || true
-# autoreconf -fiv
-# [ ! -f config.status ] && \
-#   CFLAGS="-Os" CXXFLAGS="-Os" LDFLAGS="-Wl,-s" ./configure \
-#   $([ -n "$CROSS_COMPILE" ] && echo "--host=${CROSS_COMPILE}") \
-#   --prefix=$TARGET_DIR --disable-shared --enable-static --with-pic 
-# make -j $jval
-# make install
-
 echo "*** Building FFmpeg ***"
 cd $BUILD_DIR/ffmpeg*
-# patch -p1 < "$ENV_ROOT/0000-ffmpeg-fdk-acc-free.patch"
 [ $rebuild -eq 1 -a -f Makefile ] && make distclean || true
 [ ! -f config.status ] && \
   PATH="$BIN_DIR:$PATH" \
@@ -255,17 +198,6 @@ cd $BUILD_DIR/ffmpeg*
   --enable-protocol=pipe \
   --enable-protocol=tcp \
   --enable-protocol=http
-#   --enable-openssl \
-  # --enable-libx264 \
-#   --enable-libfdk-aac \
-#   --enable-decoder=aac \
-#   --enable-parser=aac \
-#   --enable-muxer=mp4 \
-#   --enable-protocol=file \
-#   --enable-protocol=udp \
-#   --enable-protocol=https \
-#   --enable-protocol=rtmp \
-#   --enable-protocol=rtmps
 PATH="$BIN_DIR:$PATH" make -j $jval
 
 hash -r
