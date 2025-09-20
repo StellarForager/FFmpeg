@@ -25,6 +25,7 @@ jobs:
         run: |
           mkdir -pv dist
           mv dist-*/* dist/
+          chmod +x dist/*
 
       - name: Compress binaries
         run: |
