@@ -60,6 +60,10 @@ runs:
         EXT=""
         [ "${{ env.OS }}" = "windows" ] && EXT=".exe"
         cp build/ffmpeg*/ffmpeg$EXT dist/ffmpeg_${{ env.OS }}_${{ env.ARCH }}$EXT
+        echo "TOP:"
+        ls .
+        echo "DIST:"
+        ls dist/
 
     - name: Upload package
       uses: actions/upload-artifact@v4.3.1
