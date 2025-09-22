@@ -62,7 +62,7 @@ esac
 
 echo "$ARCH" | grep -qE 'x86|i386|i686' && is_x86=1 || is_x86=0
 echo "$ARCH" | grep -qE 'arm64|aarch64' && is_aarch64=1 || is_aarch64=0
-[ $is_x86 -ne 1 ] && echo "Not using yasm or nasm on non-x86 PLATFORM..."
+[ $is_x86 -ne 1 ] && echo "Not using nasm on non-x86 PLATFORM..."
 
 if [ "$PLATFORM" = "darwin" ]; then
   if [ $is_x86 -eq 1 ]; then
@@ -98,7 +98,6 @@ download(){
 
 echo "#### FFmpeg static build ####"
 
-VER_YASM=${VER_YASM:-"1.3.0"}
 VER_NASM=${VER_NASM:-"2.16.03"}
 VER_FFMPEG=${VER_FFMPEG:-"8.0"}
 
@@ -106,22 +105,11 @@ VER_FFMPEG=${VER_FFMPEG:-"8.0"}
 cd $BUILD_DIR
 
 if [ $is_x86 -eq 1 ]; then
-  case "$PLATFORM" in
-    'darwin')
-      download \
-        "yasm-$VER_YASM.tar.gz" \
-        "" \
-        "nil" \
-        "http://www.tortall.net/projects/yasm/releases/"
-      ;;
-    'linux'|'mingw32')
-      download \
-        "nasm-$VER_NASM.tar.bz2" \
-        "" \
-        "nil" \
-        "https://www.nasm.us/pub/nasm/releasebuilds/$VER_NASM/"
-      ;;
-  esac
+  download \
+    "nasm-$VER_NASM.tar.bz2" \
+    "" \
+    "nil" \
+    "https://www.nasm.us/pub/nasm/releasebuilds/$VER_NASM/"
 fi
 
 download \
@@ -135,22 +123,10 @@ download \
 TARGET_DIR_SED=$(echo $TARGET_DIR | awk '{gsub(/\//, "\\/"); print}')
 
 if [ $is_x86 -eq 1 ]; then
-  case "$PLATFORM" in
-    'darwin')
-      echo "*** Building yasm ***"
-      cd $BUILD_DIR/yasm*
-      [ $rebuild -eq 1 -a -f Makefile ] && make distclean || true
-      [ ! -f config.status ] && \
-      ./configure --prefix=$TARGET_DIR --bindir=$BIN_DIR --disable-nls
-      ;;
-    'linux'|'mingw32')
-      echo "*** Building nasm ***"
-      cd $BUILD_DIR/nasm*
-      [ $rebuild -eq 1 -a -f Makefile ] && make distclean || true
-      [ ! -f config.status ] && \
-      ./configure --prefix=$TARGET_DIR --bindir=$BIN_DIR
-      ;;
-  esac
+  echo "*** Building nasm ***"
+  cd $BUILD_DIR/nasm*
+  [ $rebuild -eq 1 -a -f Makefile ] && make distclean || true
+  [ ! -f config.status ] && ./configure --prefix=$TARGET_DIR --bindir=$BIN_DIR
   make -j $jval
   make install
 fi

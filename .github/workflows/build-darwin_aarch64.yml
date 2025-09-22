@@ -17,3 +17,4 @@ jobs:
         with:
           OS_NAME: "darwin"
           ARCH: "aarch64"
+          PLATFORM: "darwin"
