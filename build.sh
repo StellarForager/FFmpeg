@@ -147,7 +147,7 @@ cd $BUILD_DIR/ffmpeg*
   --pkg-config-flags="--static" \
   --extra-cflags="-I$TARGET_DIR/include -Os -ffunction-sections -fdata-sections -fno-asynchronous-unwind-tables -fno-unwind-tables" \
   --extra-cxxflags="-I$TARGET_DIR/include -Os -ffunction-sections -fdata-sections -fno-asynchronous-unwind-tables -fno-unwind-tables" \
-  --extra-ldflags="-L$TARGET_DIR/lib -Wl,-s $([ "$PLATFORM" = "darwin" ] && echo "-dead_strip") $([ "$PLATFORM" != "darwin" ] && echo "-Wl,--build-id=none --Wl,--gc-sections") $([ "$PLATFORM" = "mingw32" ] && echo "-static")" \
+  --extra-ldflags="-L$TARGET_DIR/lib -Wl,-s $([ "$PLATFORM" = "darwin" ] && echo "-dead_strip") $([ "$PLATFORM" != "darwin" ] && echo "-Wl,--build-id=none -Wl,--gc-sections -Wl,--as-needed") $([ "$PLATFORM" = "mingw32" ] && echo "-static")" \
   --extra-libs="$([ "$PLATFORM" = "linux" ] && echo "-lpthread -lm")" \
   --extra-ldexeflags="$([ "$PLATFORM" = "linux" ] && echo "-static")$([ "$PLATFORM" = "darwin" ] && echo "-Bstatic")" \
   --bindir="$BIN_DIR" \
