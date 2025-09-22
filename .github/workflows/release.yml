@@ -33,7 +33,7 @@ jobs:
           wget -q https://github.com/upx/upx/releases/download/v$UPX_VERSION/upx-$UPX_VERSION-amd64_linux.tar.xz -O upx.tar.xz
           tar -xf upx.tar.xz
           for FNAME in dist/*; do
-            upx-*/upx -q --best --ultra-brute "$FNAME" 1>/dev/null &
+            upx-*/upx -q --best --ultra-brute --no-lzma "$FNAME" 1>/dev/null &
           done
           wait
 
