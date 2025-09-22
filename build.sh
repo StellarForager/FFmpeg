@@ -156,21 +156,18 @@ cd $BUILD_DIR/ffmpeg*
   --disable-doc \
   --disable-everything \
   --disable-autodetect \
+  --disable-network \
   $([ "$PLATFORM" = "mingw32" ] && echo "--disable-w32threads") \
-  --enable-pic \
   --enable-static \
+  --enable-small \
   --enable-gpl \
   --enable-version3 \
-  --enable-demuxer=hls \
-  --enable-demuxer=rtsp \
   --enable-demuxer=h264 \
   --enable-decoder=h264 \
   --enable-parser=h264 \
   --enable-encoder=mjpeg \
   --enable-muxer=image2 \
-  --enable-protocol=pipe \
-  --enable-protocol=tcp \
-  --enable-protocol=http
+  --enable-protocol=pipe
 PATH="$BIN_DIR:$PATH" make -j $jval
 
 hash -r
