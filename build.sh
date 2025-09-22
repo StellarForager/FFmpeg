@@ -100,9 +100,7 @@ echo "#### FFmpeg static build ####"
 
 VER_YASM=${VER_YASM:-"1.3.0"}
 VER_NASM=${VER_NASM:-"2.16.03"}
-VER_OPENSSL=${VER_OPENSSL:-"3.3.2"}
-VER_FDKAAC=${VER_FDKAAC:-"0.1.6"}
-VER_FFMPEG=${VER_FFMPEG:-"7.1"}
+VER_FFMPEG=${VER_FFMPEG:-"8.0"}
 
 #this is our working directory
 cd $BUILD_DIR
@@ -162,8 +160,6 @@ cd $BUILD_DIR/ffmpeg*
 [ $rebuild -eq 1 -a -f Makefile ] && make distclean || true
 [ ! -f config.status ] && \
   PATH="$BIN_DIR:$PATH" \
-  PKG_CONFIG_PATH="$TARGET_DIR/lib/pkgconfig:$TARGET_DIR/lib64/pkgconfig$([ "$PLATFORM" = "darwin" ] && \
-  echo ":/usr/local/lib/pkgconfig:/usr/local/share/pkgconfig:/usr/local/Cellar/openssl@3/${VER_OPENSSL}_1/lib/pkgconfig")" \
   ./configure \
   --arch="$ARCH" \
   --target-os="$PLATFORM" \
@@ -179,6 +175,7 @@ cd $BUILD_DIR/ffmpeg*
   --extra-libs="$([ "$PLATFORM" = "linux" ] && echo "-lpthread -lm")" \
   --extra-ldexeflags="$([ "$PLATFORM" = "linux" ] && echo "-static")$([ "$PLATFORM" = "darwin" ] && echo "-Bstatic")" \
   --bindir="$BIN_DIR" \
+  $([ "$ARCH" = "riscv64" ] && echo "--disable-asm") \
   --disable-manpages \
   --disable-doc \
   --disable-everything \
