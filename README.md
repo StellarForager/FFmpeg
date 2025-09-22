@@ -8,7 +8,7 @@ Minimal FFmpeg binaries with h.264 for Quasar.
 
 [![Build for build-linux_aarch64](https://github.com/StellarForager/FFmpeg/actions/workflows/build-linux_aarch64.yml/badge.svg)](https://github.com/StellarForager/FFmpeg/actions/workflows/build-linux_aarch64.yml)
 
-[![Build for build-linux_armv7l](https://github.com/StellarForager/FFmpeg/actions/workflows/build-linux_armv7l.yml/badge.svg)](https://github.com/StellarForager/FFmpeg/actions/workflows/build-linux_armv7l.yml)
+[![Build for build-linux_armhf](https://github.com/StellarForager/FFmpeg/actions/workflows/build-linux_armhf.yml/badge.svg)](https://github.com/StellarForager/FFmpeg/actions/workflows/build-linux_armhf.yml)
 
 [![Build for linux_i686](https://github.com/StellarForager/FFmpeg/actions/workflows/build-linux_i686.yml/badge.svg)](https://github.com/StellarForager/FFmpeg/actions/workflows/build-linux_i686.yml)
 
