@@ -1,11 +1,11 @@
-name: Build for linux_armv7l
+name: Build for linux_armhf
 
 on:
   workflow_call:
   workflow_dispatch:
 
 jobs:
-  build-linux_armv7l:
+  build-linux_armhf:
     name: Build
     runs-on: ubuntu-latest
     steps:
