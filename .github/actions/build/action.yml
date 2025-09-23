@@ -21,6 +21,16 @@ inputs:
     required: false
     default: ""
     type: string
+  NDK_VERSION:
+    description: "Android NDK version"
+    required: false
+    default: ""
+    type: string
+  NDK_API_LEVEL:
+    description: "Android NDK API level"
+    required: false
+    default: ""
+    type: string
   PLATFORM:
     description: "Platform"
     required: false
@@ -43,20 +53,24 @@ runs:
         echo "ARCH=${{ inputs.ARCH }}" >> $GITHUB_ENV
         echo "CROSS_COMPILE=${{ inputs.CROSS_COMPILE }}" >> $GITHUB_ENV
         echo "CROSS_COMPILE_PKG_SUFFIX=${{ inputs.CROSS_COMPILE_PKG_SUFFIX }}" >> $GITHUB_ENV
+        echo "NDK_VERSION=${{ inputs.NDK_VERSION }}" >> $GITHUB_ENV
+        echo "NDK_API_LEVEL=${{ inputs.NDK_API_LEVEL }}" >> $GITHUB_ENV
         echo "PLATFORM=${{ inputs.PLATFORM }}" >> $GITHUB_ENV
 
     - name: Install dependencies
       shell: bash
       run: |
-        CROSS_COMPILE_PKG_SUFFIX=${{ env.CROSS_COMPILE_PKG_SUFFIX }} sh setup-dependencies.sh
-        if [ "$CROSS_COMPILE_PKG_SUFFIX" = "mingw-w64-aarch64" ]; then
+        CROSS_COMPILE_PKG_SUFFIX=${{ env.CROSS_COMPILE_PKG_SUFFIX }} NDK_VERSION=${{ inputs.NDK_VERSION }} NDK_API_LEVEL=${{ env.NDK_API_LEVEL }} sh setup-dependencies.sh
+        if [ "${{ env.CROSS_COMPILE_PKG_SUFFIX }}" = "mingw-w64-aarch64" ]; then
           echo `realpath llvm-mingw-*/bin/` >> $GITHUB_PATH
+        elif [ -n "${{ env.NDK_API_LEVEL }}" ]; then
+          echo `realpath android-ndk-*/toolchains/llvm/prebuilt/linux-x86_64/bin` >> $GITHUB_PATH
         fi
 
     - name: Build FFmpeg
       shell: bash
       run: |
-        ARCH=${{ env.ARCH }} CROSS_COMPILE=${{ env.CROSS_COMPILE }} PLATFORM=${{ env.PLATFORM }} sh build.sh
+        ARCH=${{ env.ARCH }} CROSS_COMPILE=${{ env.CROSS_COMPILE }} NDK_API_LEVEL=${{ env.NDK_API_LEVEL }} PLATFORM=${{ env.PLATFORM }} sh build.sh
         mkdir -pv dist/
         EXT=""
         [ "${{ env.OS_NAME }}" = "windows" ] && EXT=".exe"

@@ -4,5 +4,6 @@ target/
 *.swp
 bin/
 dl/
-*/__pycache__/
+llvm-mingw-*
+android-ndk-*
 upx*

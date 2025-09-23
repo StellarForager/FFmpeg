@@ -44,11 +44,10 @@ ENV_ROOT=`pwd`
 . ./env.source
 
 # check operating system
-OS=`uname -s`
 ARCH=${ARCH:-`uname -m`}
 PLATFORM=${PLATFORM:-"unknown"}
 
-[ "$PLATFORM" = "unknown" ] && case $OS in
+[ "$PLATFORM" = "unknown" ] && case `uname -s` in
   'Darwin')
     PLATFORM='darwin'
     ;;
@@ -74,12 +73,20 @@ fi
 
 # CROSS_COMPILE="aarch64-linux-gnu"
 CROSS_COMPILE=${CROSS_COMPILE:-""}
-[ -n "$CROSS_COMPILE" ] &&
-  CC="${CROSS_COMPILE}-gcc" \
-  CXX="${CROSS_COMPILE}-g++" \
-  AR="${CROSS_COMPILE}-ar" \
-  RANLIB="${CROSS_COMPILE}-ranlib" \
+if [ "$PLATFORM" = "android" ]; then
+  CC="${CROSS_COMPILE}${NDK_API_LEVEL}-clang"
+  CXX="${CROSS_COMPILE}${NDK_API_LEVEL}-clang++"
+  AR="llvm-ar"
+  NM="llvm-nm"
+  RANLIB="llvm-ranlib"
+  STRIP="llvm-strip"
+elif [ -n "$CROSS_COMPILE" ]; then
+  CC="${CROSS_COMPILE}-gcc"
+  CXX="${CROSS_COMPILE}-g++"
+  AR="${CROSS_COMPILE}-ar"
+  RANLIB="${CROSS_COMPILE}-ranlib"
   STRIP="${CROSS_COMPILE}-strip"
+fi
 
 #if you want a rebuild
 rm -rf "$BUILD_DIR" "$TARGET_DIR"
@@ -133,6 +140,8 @@ fi
 
 echo "*** Building FFmpeg ***"
 cd $BUILD_DIR/ffmpeg*
+
+export PATH="$BIN_DIR:$PATH" 
 [ $rebuild -eq 1 -a -f Makefile ] && make distclean || true
 [ ! -f config.status ] && \
   PATH="$BIN_DIR:$PATH" \
@@ -140,9 +149,16 @@ cd $BUILD_DIR/ffmpeg*
   --arch="$ARCH" \
   --target-os="$PLATFORM" \
   $([ "$PLATFORM" = "darwin" ] && echo "--cc=/usr/bin/clang") \
+  $([ "$PLATFORM" = "android" ] && echo "--cc=$CC") \
+  $([ "$PLATFORM" = "android" ] && echo "--cxx=$CXX") \
+  $([ "$PLATFORM" = "android" ] && echo "--ar=$AR") \
+  $([ "$PLATFORM" = "android" ] && echo "--nm=$NM") \
+  $([ "$PLATFORM" = "android" ] && echo "--strip=$STRIP") \
+  $([ "$PLATFORM" = "android" ] && echo "--ranlib=$RANLIB") \
   $([ -n "$CROSS_COMPILE" ] && echo "--cross-prefix=${CROSS_COMPILE}-") \
   $([ -n "$CROSS_COMPILE" ] && echo "--enable-cross-compile") \
-  $([ -n "$CROSS_COMPILE" ] && echo "--pkg-config=pkg-config") \
+  $([ "$PLATFORM" = "android" ] && echo "--sysroot=$(dirname "$(dirname $(which $CC))")/sysroot") \
+  $([ -n "$CROSS_COMPILE" ] && [ "$PLATFORM" != "android" ] && echo "--pkg-config=pkg-config") \
   --prefix="$TARGET_DIR" \
   --pkg-config-flags="--static" \
   --extra-cflags="-I$TARGET_DIR/include -Os -ffunction-sections -fdata-sections -fno-asynchronous-unwind-tables -fno-unwind-tables" \
