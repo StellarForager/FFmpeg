@@ -167,6 +167,7 @@ cd $BUILD_DIR/ffmpeg*
   --enable-parser=h264 \
   --enable-encoder=mjpeg \
   --enable-muxer=image2 \
+  --enable-protocol=file \
   --enable-protocol=pipe
 PATH="$BIN_DIR:$PATH" make -j $jval
 
