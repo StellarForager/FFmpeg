@@ -17,7 +17,7 @@ jobs:
         with:
           OS_NAME: "android"
           ARCH: "aarch64"
-          CROSS_COMPILE: "armv7a-linux-android"
+          CROSS_COMPILE: "aarch64-linux-android"
           NDK_VERSION: "r27d"
           NDK_API_LEVEL: "21"
           PLATFORM: "android"
