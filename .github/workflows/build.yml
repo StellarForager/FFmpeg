@@ -17,9 +17,9 @@ jobs:
     name: Build for linux_aarch64
     uses: ./.github/workflows/build-linux_aarch64.yml
 
-  build-linux_armv7l:
-    name: Build for linux_armv7l
-    uses: ./.github/workflows/build-linux_armv7l.yml
+  build-linux_armhf:
+    name: Build for linux_armhf
+    uses: ./.github/workflows/build-linux_armhf.yml
 
   build-linux_i686:
     name: Build for linux_i686
