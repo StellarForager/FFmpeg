@@ -162,7 +162,7 @@ cd $BUILD_DIR/ffmpeg*
   --enable-small \
   --enable-gpl \
   --enable-version3 \
-   -enable-demuxer=mpegts \
+  --enable-demuxer=mpegts \
   --enable-demuxer=h264 \
   --enable-decoder=h264 \
   --enable-parser=h264 \
