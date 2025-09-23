@@ -162,12 +162,12 @@ cd $BUILD_DIR/ffmpeg*
   --enable-small \
   --enable-gpl \
   --enable-version3 \
+   -enable-demuxer=mpegts \
   --enable-demuxer=h264 \
   --enable-decoder=h264 \
   --enable-parser=h264 \
   --enable-encoder=mjpeg \
   --enable-muxer=image2 \
-  --enable-protocol=file \
   --enable-protocol=pipe
 PATH="$BIN_DIR:$PATH" make -j $jval
 
