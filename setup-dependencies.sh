@@ -17,7 +17,7 @@ elif grep -qE 'debian|ubuntu' /etc/os-release; then
     sudo apt-get install \
       --allow-remove-essential --allow-change-held-packages -y \
       "gcc-$CROSS_COMPILE_PKG_SUFFIX" "g++-$CROSS_COMPILE_PKG_SUFFIX"
-  elif [ -n "${{ env.NDK_API_LEVEL }}" ]; then
+  elif [ -n "${{ NDK_API_LEVEL }}" ]; then
     wget "https://dl.google.com/android/repository/android-ndk-$NDK_VERSION-linux.zip"
     unzip -q android-ndk-*.zip
     export PATH="$(realpath android-ndk-*/toolchains/llvm/prebuilt/linux-x86_64/bin/):$PATH"
