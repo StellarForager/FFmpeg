@@ -1,0 +1,23 @@
+name: Build for android_armv7a
+
+on:
+  workflow_call:
+  workflow_dispatch:
+
+jobs:
+  build-android_armv7a:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4.1.1
+
+      - name: Build FFmpeg
+        uses: ./.github/actions/build
+        with:
+          OS_NAME: "android"
+          ARCH: "armv7a"
+          CROSS_COMPILE: "armv7a-linux-androideabi"
+          NDK_VERSION: "r27d"
+          NDK_API_LEVEL: "21"
+          PLATFORM: "android"
