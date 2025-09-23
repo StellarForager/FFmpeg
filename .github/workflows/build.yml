@@ -5,6 +5,10 @@ on:
   workflow_dispatch:
 
 jobs:
+  build-android_aarch64:
+    name: Build for android_aarch64
+    uses: ./.github/workflows/build-android_aarch64.yml
+  
   build-android_armv7a:
     name: Build for android_armv7a
     uses: ./.github/workflows/build-android_armv7a.yml
