@@ -4,7 +4,7 @@ Minimal FFmpeg binaries with h.264 for Quasar.
 ## Build Status
 [![Build for android_aarch64](https://github.com/StellarForager/FFmpeg/actions/workflows/build-android_aarch64.yml/badge.svg)](https://github.com/StellarForager/FFmpeg/actions/workflows/build-android_aarch64.yml)
 
-[![Build for android_armv7l](https://github.com/StellarForager/FFmpeg/actions/workflows/build-android_armv7l.yml/badge.svg)](https://github.com/StellarForager/FFmpeg/actions/workflows/build-android_armv7l.yml)
+[![Build for android_armv7a](https://github.com/StellarForager/FFmpeg/actions/workflows/build-android_armv7a.yml/badge.svg)](https://github.com/StellarForager/FFmpeg/actions/workflows/build-android_armv7a.yml)
 
 [![Build for darwin_aarch64](https://github.com/StellarForager/FFmpeg/actions/workflows/build-darwin_aarch64.yml/badge.svg)](https://github.com/StellarForager/FFmpeg/actions/workflows/build-darwin_aarch64.yml)
 
