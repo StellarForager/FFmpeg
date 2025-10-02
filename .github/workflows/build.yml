@@ -12,6 +12,14 @@ jobs:
   build-android_armv7a:
     name: Build for android_armv7a
     uses: ./.github/workflows/build-android_armv7a.yml
+  
+  build-android_i686:
+    name: Build for android_i686
+    uses: ./.github/workflows/build-android_i686.yml
+  
+  build-android_x86_64:
+    name: Build for android_x86_64
+    uses: ./.github/workflows/build-android_x86_64.yml
 
   build-darwin_aarch64:
     name: Build for darwin_aarch64

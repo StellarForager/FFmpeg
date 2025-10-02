@@ -6,13 +6,17 @@ Minimal FFmpeg binaries with h.264 for Quasar.
 
 [![Build for android_armv7a](https://github.com/StellarForager/FFmpeg/actions/workflows/build-android_armv7a.yml/badge.svg)](https://github.com/StellarForager/FFmpeg/actions/workflows/build-android_armv7a.yml)
 
+[![Build for android_i686](https://github.com/StellarForager/FFmpeg/actions/workflows/build-android_i686.yml/badge.svg)](https://github.com/StellarForager/FFmpeg/actions/workflows/build-android_i686.yml)
+
+[![Build for android_x86_64](https://github.com/StellarForager/FFmpeg/actions/workflows/build-android_x86_64.yml/badge.svg)](https://github.com/StellarForager/FFmpeg/actions/workflows/build-android_x86_64.yml)
+
 [![Build for darwin_aarch64](https://github.com/StellarForager/FFmpeg/actions/workflows/build-darwin_aarch64.yml/badge.svg)](https://github.com/StellarForager/FFmpeg/actions/workflows/build-darwin_aarch64.yml)
 
-[![Build for build-darwin_x86_64](https://github.com/StellarForager/FFmpeg/actions/workflows/build-darwin_x86_64.yml/badge.svg)](https://github.com/StellarForager/FFmpeg/actions/workflows/build-darwin_x86_64.yml)
+[![Build for darwin_x86_64](https://github.com/StellarForager/FFmpeg/actions/workflows/build-darwin_x86_64.yml/badge.svg)](https://github.com/StellarForager/FFmpeg/actions/workflows/build-darwin_x86_64.yml)
 
-[![Build for build-linux_aarch64](https://github.com/StellarForager/FFmpeg/actions/workflows/build-linux_aarch64.yml/badge.svg)](https://github.com/StellarForager/FFmpeg/actions/workflows/build-linux_aarch64.yml)
+[![Build for linux_aarch64](https://github.com/StellarForager/FFmpeg/actions/workflows/build-linux_aarch64.yml/badge.svg)](https://github.com/StellarForager/FFmpeg/actions/workflows/build-linux_aarch64.yml)
 
-[![Build for build-linux_armhf](https://github.com/StellarForager/FFmpeg/actions/workflows/build-linux_armhf.yml/badge.svg)](https://github.com/StellarForager/FFmpeg/actions/workflows/build-linux_armhf.yml)
+[![Build for linux_armhf](https://github.com/StellarForager/FFmpeg/actions/workflows/build-linux_armhf.yml/badge.svg)](https://github.com/StellarForager/FFmpeg/actions/workflows/build-linux_armhf.yml)
 
 [![Build for linux_i686](https://github.com/StellarForager/FFmpeg/actions/workflows/build-linux_i686.yml/badge.svg)](https://github.com/StellarForager/FFmpeg/actions/workflows/build-linux_i686.yml)
 
