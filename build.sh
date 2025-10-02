@@ -167,6 +167,7 @@ export PATH="$BIN_DIR:$PATH"
   --extra-libs="$([ "$PLATFORM" = "linux" ] && echo "-lpthread -lm")" \
   --extra-ldexeflags="$([ "$PLATFORM" = "linux" ] && echo "-static")$([ "$PLATFORM" = "darwin" ] && echo "-Bstatic")" \
   --bindir="$BIN_DIR" \
+  $([ "$PLATFORM" = "android" ] && [ "$ARCH" = "i686" ] && echo "--disable-x86asm") \
   $([ "$ARCH" = "riscv64" ] && echo "--disable-asm") \
   --disable-manpages \
   --disable-doc \
